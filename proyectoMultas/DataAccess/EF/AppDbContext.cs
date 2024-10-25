@@ -16,6 +16,7 @@ namespace DataAccess.EF
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
+        public DbSet<Notificacion> Notificacions { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
