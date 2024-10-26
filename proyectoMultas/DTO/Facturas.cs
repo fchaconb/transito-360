@@ -13,7 +13,7 @@ namespace DTO
         [Key]
         public int Id { get; set; }
         [Required]
-        public DateOnly fechaPago { get; set; }
+        public DateTime fechaPago { get; set; }
         [Required]
         public string detalle { get; set; }
         [Required]

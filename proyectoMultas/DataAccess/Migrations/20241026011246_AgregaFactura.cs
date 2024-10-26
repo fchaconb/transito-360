@@ -17,7 +17,7 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    fechaPago = table.Column<DateOnly>(type: "date", nullable: false),
+                    fechaPago = table.Column<DateTime>(type: "date", nullable: false),
                     detalle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     subTotal = table.Column<double>(type: "float", nullable: false),
                     total = table.Column<double>(type: "float", nullable: false),
