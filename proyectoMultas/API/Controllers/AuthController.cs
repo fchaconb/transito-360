@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BusinessLogic;
+using DataAccess.EF;
 
 namespace API.Controllers
 {
@@ -16,11 +18,13 @@ namespace API.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly AppDbContext contexto;
 
-        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration, AppDbContext context)
         {
             _userManager = userManager;
             _configuration = configuration;
+            contexto = context;
         }
 
         [HttpPost]
@@ -39,10 +43,10 @@ namespace API.Controllers
         {
             var roles = await _userManager.GetRolesAsync(user);  // Retrieve the roles for the user
             var claims = new List<Claim>
-    {
-        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
 
             // Add role claims
             foreach (var role in roles)
@@ -63,7 +67,6 @@ namespace API.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] LogUpDTO newUser)
         {
@@ -74,8 +77,8 @@ namespace API.Controllers
 
             var user = new AppUser
             {
-                UserName = newUser.UserName,
-                Email = newUser.Email
+                Email = newUser.Email,
+                UserName = newUser.Email,
             };
 
             var createdUserResult = await _userManager.CreateAsync(user, newUser.Password);
@@ -83,7 +86,31 @@ namespace API.Controllers
             if (createdUserResult.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "User");
-                return Created("Usuario creado exitosamente", null);
+
+                var usuario = new Usuario
+                {
+                    Cedula = newUser.Cedula,
+                    Nombre = newUser.Nombre,
+                    Apellido = newUser.Apellido,
+                    Correo = newUser.Email,
+                    Contrasena = newUser.Password,
+                    Telefono = newUser.Telefono,
+                    fotoCedula = newUser.fotoCedula,
+                    fotoPerfil = newUser.fotoPerfil,
+                    IdRol = newUser.IdRol
+                };
+
+                var usuariosManager = new UsuariosManager(contexto);
+
+                var usuarioNuevo = await usuariosManager.CrearUsuario(usuario);
+                if (usuarioNuevo != null)
+                {
+                    return Created("Usuario creado exitosamente", null);
+                }
+                else
+                {
+                    return BadRequest("Error al crear el usuario en la base de datos.");
+                }
             }
 
             foreach (var error in createdUserResult.Errors)
@@ -124,10 +151,10 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                return Ok("Usuario agregado al rol de Admin con �xito");
+                return Ok("Usuario agregado al rol de Admin con éxito");
             }
 
-            // Si hubo alg�n error al agregar el rol
+            // Si hubo algún error al agregar el rol
             return BadRequest("No se pudo agregar el rol de Admin al usuario");
         }
     }

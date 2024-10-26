@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.EF.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.EF
 {
@@ -16,7 +17,8 @@ namespace DataAccess.EF
             context.Database.EnsureCreated();
 
             // Crear roles si no existen
-            string[] roleNames = { "Admin", "User", "Manager" };
+            string[] roleNames = { "Admin" };
+            
             foreach (var roleName in roleNames)
             {
                 if (!await roleManager.RoleExistsAsync(roleName))
