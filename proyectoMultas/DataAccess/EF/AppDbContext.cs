@@ -19,6 +19,8 @@ namespace DataAccess.EF
         public DbSet<Notificacion> Notificacions { get; set; }
         public DbSet<Placas> Placas { get; set; }
         public DbSet<CatalogoInfracciones> CatalogoInfracciones{ get; set; }
+        public DbSet<Multas> Multas { get; set; }
+
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
