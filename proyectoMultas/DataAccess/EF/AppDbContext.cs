@@ -20,6 +20,8 @@ namespace DataAccess.EF
         public DbSet<Placas> Placas { get; set; }
         public DbSet<CatalogoInfracciones> CatalogoInfracciones{ get; set; }
         public DbSet<Multas> Multas { get; set; }
+        public DbSet<Facturas> Facturas { get; set; }
+        public DbSet<Permisos> Permisos { get; set; }
 
 
 
