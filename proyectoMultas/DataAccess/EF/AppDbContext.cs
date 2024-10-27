@@ -24,6 +24,7 @@ namespace DataAccess.EF
         public DbSet<Permisos> Permisos { get; set; }
         public DbSet<RolPermiso> RolPermisos { get; set; }
         public DbSet<usuarioPlaca> usuarioPlacas { get; set; }
+        public DbSet<multaPlaca> multaPlacas { get; set; }
 
 
 
