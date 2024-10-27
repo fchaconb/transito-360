@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241026002137_AgregaMultas")]
-    partial class AgregaMultas
+    [Migration("20241026155922_AgregaMulta")]
+    partial class AgregaMulta
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,42 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CatalogoInfracciones");
+                });
+
+            modelBuilder.Entity("DTO.Facturas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdMulta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<string>("detalle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("fechaPago")
+                        .HasColumnType("date");
+
+                    b.Property<string>("metodoPago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("subTotal")
+                        .HasColumnType("float");
+
+                    b.Property<double>("total")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Facturas");
                 });
 
             modelBuilder.Entity("DTO.Multas", b =>
@@ -86,7 +122,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("pagada")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("total")
                         .HasColumnType("float");
@@ -124,6 +160,23 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Notificacions");
+                });
+
+            modelBuilder.Entity("DTO.Permisos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permisos");
                 });
 
             modelBuilder.Entity("DTO.Placas", b =>

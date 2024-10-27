@@ -26,7 +26,7 @@ namespace DTO
         [Required]
         public DateTime fecha { get; set; }
         [Required]
-        public char pagada { get; set; }
+        public string pagada { get; set; }
         [Required]
         public string fotoSinpe {  get; set; }
         [Required]
