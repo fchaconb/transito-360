@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTO;
 using DataAccess.EF;
+using Org.BouncyCastle.Crypto.Generators;
 
 namespace API.Controllers
 {
@@ -73,11 +74,23 @@ namespace API.Controllers
             return NoContent();
         }
 
+        // ... existing code ...
+
         // POST: api/Usuarios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+
+            if (!string.IsNullOrEmpty(usuario.fotoCedulaBase64) && !string.IsNullOrEmpty(usuario.fotoPerfilBase64))
+            {
+                usuario.fotoCedula = Convert.FromBase64String(usuario.fotoCedulaBase64);
+                usuario.fotoPerfil = Convert.FromBase64String(usuario.fotoPerfilBase64);
+            }
+
+            usuario.fotoCedulaBase64 = null;
+            usuario.fotoPerfilBase64 = null;
+
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 

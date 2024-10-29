@@ -33,7 +33,7 @@ namespace API
                 options.AddPolicy(name: "CorsPolicy",
                     policy =>
                     {
-                        policy.WithOrigins("https://localhost:7201");
+                        policy.AllowAnyOrigin();
                         policy.AllowAnyHeader(); //application/json application/xml
                         policy.AllowAnyMethod(); //GET, POST, PUT,Delete
                     });

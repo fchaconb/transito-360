@@ -16,9 +16,13 @@ namespace DataAccess.EF
             // Crear la base de datos si no existe
             context.Database.EnsureCreated();
 
+            var rolesDB = await context.Roles.ToListAsync();
+            var rolesResult = rolesDB.Select(r => r.Nombre).ToArray();
+
             // Crear roles si no existen
             string[] roleNames = { "Admin" };
-            
+            roleNames = roleNames.Concat(rolesResult).ToArray();
+
             foreach (var roleName in roleNames)
             {
                 if (!await roleManager.RoleExistsAsync(roleName))

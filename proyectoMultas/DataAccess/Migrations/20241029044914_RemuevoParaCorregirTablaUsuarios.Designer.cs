@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241026155140_loginDTOChange")]
-    partial class loginDTOChange
+    [Migration("20241029044914_RemuevoParaCorregirTablaUsuarios")]
+    partial class RemuevoParaCorregirTablaUsuarios
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,42 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CatalogoInfracciones");
+                });
+
+            modelBuilder.Entity("DTO.Facturas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdMulta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<string>("detalle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("fechaPago")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("metodoPago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("subTotal")
+                        .HasColumnType("float");
+
+                    b.Property<double>("total")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Facturas");
                 });
 
             modelBuilder.Entity("DTO.Multas", b =>
@@ -86,7 +122,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("pagada")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("total")
                         .HasColumnType("float");
@@ -126,6 +162,23 @@ namespace DataAccess.Migrations
                     b.ToTable("Notificacions");
                 });
 
+            modelBuilder.Entity("DTO.Permisos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permisos");
+                });
+
             modelBuilder.Entity("DTO.Placas", b =>
                 {
                     b.Property<string>("Id")
@@ -151,6 +204,25 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("DTO.RolPermiso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdPermiso")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdRol")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RolPermisos");
                 });
 
             modelBuilder.Entity("DTO.Ticket", b =>
@@ -245,17 +317,76 @@ namespace DataAccess.Migrations
                     b.Property<int>("Telefono")
                         .HasColumnType("int");
 
-                    b.Property<string>("fotoCedula")
+                    b.Property<byte[]>("fotoCedula")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("fotoPerfil")
+                    b.Property<byte[]>("fotoPerfil")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdRol");
+
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("DTO.infraccionMulta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("idInfraccion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idMulta")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("infraccionMulta");
+                });
+
+            modelBuilder.Entity("DTO.multaPlaca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("idMulta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idPlaca")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("multaPlacas");
+                });
+
+            modelBuilder.Entity("DTO.usuarioPlaca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cedula")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Placa")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("usuarioPlacas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -461,6 +592,15 @@ namespace DataAccess.Migrations
                     b.HasOne("DTO.User", null)
                         .WithMany("Tickets")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.Usuario", b =>
+                {
+                    b.HasOne("DTO.Rol", null)
+                        .WithMany()
+                        .HasForeignKey("IdRol")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

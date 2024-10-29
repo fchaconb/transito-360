@@ -40,6 +40,11 @@ namespace DataAccess.EF
 
             modelBuilder.Entity<User>()
                 .HasMany(t => t.Tickets);
+
+            modelBuilder.Entity<Usuario>()
+                .HasOne<Rol>()
+                .WithMany()
+                .HasForeignKey(r => r.IdRol);
         }
     }
 }

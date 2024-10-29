@@ -28,8 +28,14 @@ namespace DTO
         [Required]
         public int Telefono { get; set; }
         [Required]
-        public string fotoCedula { get; set; }
-        public string fotoPerfil { get; set; }
+        public byte[] fotoCedula { get; set; }
+        public byte[] fotoPerfil { get; set; }
+
+        [NotMapped]
+        public string fotoCedulaBase64 { get; set; }
+        [NotMapped]
+        public string fotoPerfilBase64 { get; set; }
+
 
         [Required]
         [ForeignKey("Rol")]

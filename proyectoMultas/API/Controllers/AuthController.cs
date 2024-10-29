@@ -85,7 +85,6 @@ namespace API.Controllers
 
             if (createdUserResult.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "User");
 
                 var usuario = new Usuario
                 {
@@ -99,6 +98,9 @@ namespace API.Controllers
                     fotoPerfil = newUser.fotoPerfil,
                     IdRol = newUser.IdRol
                 };
+
+                var roleOfNewUser = await contexto.Roles.FindAsync(newUser.IdRol);
+                await _userManager.AddToRoleAsync(user, roleOfNewUser.Nombre);
 
                 var usuariosManager = new UsuariosManager(contexto);
 
