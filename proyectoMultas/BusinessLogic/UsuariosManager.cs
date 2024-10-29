@@ -17,6 +17,15 @@ namespace BusinessLogic
 
         public async Task<Usuario> CrearUsuario(Usuario usuario)
         {
+            if (!string.IsNullOrEmpty(usuario.fotoCedulaBase64) && !string.IsNullOrEmpty(usuario.fotoPerfilBase64))
+            {
+                usuario.fotoCedula = Convert.FromBase64String(usuario.fotoCedulaBase64);
+                usuario.fotoPerfil = Convert.FromBase64String(usuario.fotoPerfilBase64);
+            }
+
+            usuario.fotoCedulaBase64 = null;
+            usuario.fotoPerfilBase64 = null;
+
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 

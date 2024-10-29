@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicio : Migration
+    public partial class RemuevoParaCorregirTablaUsuarios : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,131 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CatalogoInfracciones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Costo = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CatalogoInfracciones", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Facturas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    fechaPago = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    detalle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    subTotal = table.Column<double>(type: "float", nullable: false),
+                    total = table.Column<double>(type: "float", nullable: false),
+                    metodoPago = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false),
+                    IdMulta = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Facturas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "infraccionMulta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idInfraccion = table.Column<int>(type: "int", nullable: false),
+                    idMulta = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_infraccionMulta", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "multaPlacas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idPlaca = table.Column<int>(type: "int", nullable: false),
+                    idMulta = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_multaPlacas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Multas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombreInfractor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    apellidoInfractor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cedulaInfractor = table.Column<int>(type: "int", nullable: false),
+                    longitud = table.Column<float>(type: "real", nullable: false),
+                    latitud = table.Column<float>(type: "real", nullable: false),
+                    fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    pagada = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fotoSinpe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    total = table.Column<double>(type: "float", nullable: false),
+                    IdOficial = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Multas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notificacions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Leido = table.Column<bool>(type: "bit", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notificacions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permisos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permisos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Placas",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Placas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -61,6 +186,20 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolPermisos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPermiso = table.Column<int>(type: "int", nullable: false),
+                    IdRol = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolPermisos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,24 +219,17 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "usuarioPlacas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Cedula = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefono = table.Column<int>(type: "int", nullable: false),
-                    fotoCedula = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    fotoPerfil = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdRol = table.Column<int>(type: "int", nullable: false)
+                    Placa = table.Column<int>(type: "int", nullable: false),
+                    Cedula = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_usuarioPlacas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,6 +339,33 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cedula = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefono = table.Column<int>(type: "int", nullable: false),
+                    fotoCedula = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    fotoPerfil = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    IdRol = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Roles_IdRol",
+                        column: x => x.IdRol,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tickets",
                 columns: table => new
                 {
@@ -271,6 +430,11 @@ namespace DataAccess.Migrations
                 name: "IX_Tickets_UserId",
                 table: "Tickets",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_IdRol",
+                table: "Usuarios",
+                column: "IdRol");
         }
 
         /// <inheritdoc />
@@ -292,10 +456,37 @@ namespace DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "CatalogoInfracciones");
+
+            migrationBuilder.DropTable(
+                name: "Facturas");
+
+            migrationBuilder.DropTable(
+                name: "infraccionMulta");
+
+            migrationBuilder.DropTable(
+                name: "multaPlacas");
+
+            migrationBuilder.DropTable(
+                name: "Multas");
+
+            migrationBuilder.DropTable(
+                name: "Notificacions");
+
+            migrationBuilder.DropTable(
+                name: "Permisos");
+
+            migrationBuilder.DropTable(
+                name: "Placas");
+
+            migrationBuilder.DropTable(
+                name: "RolPermisos");
 
             migrationBuilder.DropTable(
                 name: "Tickets");
+
+            migrationBuilder.DropTable(
+                name: "usuarioPlacas");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
@@ -308,6 +499,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

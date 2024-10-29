@@ -314,15 +314,17 @@ namespace DataAccess.Migrations
                     b.Property<int>("Telefono")
                         .HasColumnType("int");
 
-                    b.Property<string>("fotoCedula")
+                    b.Property<byte[]>("fotoCedula")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("fotoPerfil")
+                    b.Property<byte[]>("fotoPerfil")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdRol");
 
                     b.ToTable("Usuarios");
                 });
@@ -587,6 +589,15 @@ namespace DataAccess.Migrations
                     b.HasOne("DTO.User", null)
                         .WithMany("Tickets")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.Usuario", b =>
+                {
+                    b.HasOne("DTO.Rol", null)
+                        .WithMany()
+                        .HasForeignKey("IdRol")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
