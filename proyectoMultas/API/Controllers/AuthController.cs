@@ -96,7 +96,8 @@ namespace API.Controllers
                     Telefono = newUser.Telefono,
                     fotoCedula = newUser.fotoCedula,
                     fotoPerfil = newUser.fotoPerfil,
-                    IdRol = newUser.IdRol
+                    IdRol = newUser.IdRol,
+                    Placas = newUser.Placas
                 };
 
                 var roleOfNewUser = await contexto.Roles.FindAsync(newUser.IdRol);

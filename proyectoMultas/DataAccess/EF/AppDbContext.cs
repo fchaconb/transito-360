@@ -23,7 +23,6 @@ namespace DataAccess.EF
         public DbSet<Facturas> Facturas { get; set; }
         public DbSet<Permisos> Permisos { get; set; }
         public DbSet<RolPermiso> RolPermisos { get; set; }
-        public DbSet<usuarioPlaca> usuarioPlacas { get; set; }
         public DbSet<multaPlaca> multaPlacas { get; set; }
         public DbSet<infraccionMulta> infraccionMulta { get; set; }
         public DbSet<Disputas> disputas { get; set; }
@@ -43,9 +42,16 @@ namespace DataAccess.EF
                 .HasMany(t => t.Tickets);
 
             modelBuilder.Entity<Usuario>()
+                .HasMany(p => p.Placas);
+
+            modelBuilder.Entity<Usuario>()
                 .HasOne<Rol>()
                 .WithMany()
                 .HasForeignKey(r => r.IdRol);
+
+            modelBuilder.Entity<Usuario>()
+                .HasIndex(u => u.Correo);
+
         }
     }
 }
