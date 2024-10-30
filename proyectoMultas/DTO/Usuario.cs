@@ -40,5 +40,8 @@ namespace DTO
         [Required]
         [ForeignKey("Rol")]
         public int IdRol { get; set; }
+
+        public ICollection<Placas> Placas { get; set; }
+
     }
 }

@@ -14,5 +14,6 @@ namespace DTO
         public byte[] fotoCedula { get; set; }
         public byte[] fotoPerfil { get; set; }
         public int IdRol { get; set; }
+        public ICollection<Placas> Placas { get; set; }
     }
 }

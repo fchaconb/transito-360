@@ -29,6 +29,10 @@ namespace BusinessLogic
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
+            var usuarioWithPlacas = await _context.Usuarios
+                .Include(u => u.Placas)
+                .FirstOrDefaultAsync(u => u.Id == usuario.Id);
+
             return usuario;
         }
     }

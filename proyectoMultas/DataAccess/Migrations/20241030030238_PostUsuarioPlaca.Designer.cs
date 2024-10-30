@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241029044914_RemuevoParaCorregirTablaUsuarios")]
-    partial class RemuevoParaCorregirTablaUsuarios
+    [Migration("20241030030238_PostUsuarioPlaca")]
+    partial class PostUsuarioPlaca
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -184,7 +184,12 @@ namespace DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Placas");
                 });
@@ -305,7 +310,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Correo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("IdRol")
                         .HasColumnType("int");
@@ -326,6 +331,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Correo");
 
                     b.HasIndex("IdRol");
 
@@ -368,25 +375,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("multaPlacas");
-                });
-
-            modelBuilder.Entity("DTO.usuarioPlaca", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cedula")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Placa")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("usuarioPlacas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -587,6 +575,15 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DTO.Placas", b =>
+                {
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany("Placas")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DTO.Ticket", b =>
                 {
                     b.HasOne("DTO.User", null)
@@ -659,6 +656,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DTO.User", b =>
                 {
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("DTO.Usuario", b =>
+                {
+                    b.Navigation("Placas");
                 });
 #pragma warning restore 612, 618
         }
