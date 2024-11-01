@@ -34,7 +34,10 @@ namespace API.Controllers
             if (user != null && await _userManager.CheckPasswordAsync(user, userData.Password))
             {
                 var token = await GenerateJwtToken(user);
-                return Ok(new { token });
+                var roles = await _userManager.GetRolesAsync(user);
+                var role = roles.FirstOrDefault();
+
+                return Ok(new { token, role });
             }
             return Unauthorized();
         }
