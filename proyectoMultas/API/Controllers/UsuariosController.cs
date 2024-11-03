@@ -43,6 +43,32 @@ namespace API.Controllers
             return usuario;
         }
 
+        // GET: api/Usuarios/NotRole/1
+        [HttpGet("NotRole/{roleId}")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuariosNotInRole(int roleId)
+        {
+            var usuarios = await _context.Usuarios
+                .Where(u => u.IdRol != roleId)
+                .ToListAsync();
+
+            return usuarios;
+        }
+
+        //GET: api/Usuarios/email
+        [HttpGet("email/{email}")]
+        public async Task<ActionResult<Usuario>> GetUsuarioByEmail(string email)
+        {
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Correo == email);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return usuario;
+        }
+
         // PUT: api/Usuarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
