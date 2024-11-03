@@ -12,8 +12,8 @@ namespace DTO
         public string Apellido { get; set; }
         public int Telefono { get; set; }
         public byte[] fotoCedula { get; set; }
-        public byte[] fotoPerfil { get; set; }
+        public byte[]? fotoPerfil { get; set; }
         public int IdRol { get; set; }
-        public ICollection<Placas> Placas { get; set; }
+        public ICollection<Placas>? Placas { get; set; }
     }
 }

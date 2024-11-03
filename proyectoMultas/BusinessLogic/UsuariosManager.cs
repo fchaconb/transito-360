@@ -35,5 +35,24 @@ namespace BusinessLogic
 
             return usuario;
         }
+
+        public async Task<Usuario> GetUsuarioByEmail(string email)
+        {
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Correo == email);
+
+            if (usuario == null)
+            {
+                return null;
+            }
+
+            return usuario;
+        }
+
+
+
+
+
+
     }
 }

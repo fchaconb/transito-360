@@ -24,12 +24,10 @@ namespace DTO
         [Required]
         public string Correo { get; set; }
         [Required]
-        public string Contrasena { get; set; }
-        [Required]
         public int Telefono { get; set; }
         [Required]
         public byte[] fotoCedula { get; set; }
-        public byte[] fotoPerfil { get; set; }
+        public byte[]? fotoPerfil { get; set; }
 
         [NotMapped]
         public string fotoCedulaBase64 { get; set; }
@@ -41,7 +39,7 @@ namespace DTO
         [ForeignKey("Rol")]
         public int IdRol { get; set; }
 
-        public ICollection<Placas> Placas { get; set; }
+        public ICollection<Placas>? Placas { get; set; }
 
     }
 }

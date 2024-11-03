@@ -33,11 +33,15 @@ namespace API.Controllers
             var user = await _userManager.FindByNameAsync(userData.UserName);
             if (user != null && await _userManager.CheckPasswordAsync(user, userData.Password))
             {
+                var UsuarioManager = new UsuariosManager(contexto);
+                var usuario = await UsuarioManager.GetUsuarioByEmail(userData.UserName);
+
                 var token = await GenerateJwtToken(user);
                 var roles = await _userManager.GetRolesAsync(user);
                 var role = roles.FirstOrDefault();
+                var userId = usuario.Id;
 
-                return Ok(new { token, role });
+                return Ok(new { token, role, userId });
             }
             return Unauthorized();
         }
@@ -95,7 +99,6 @@ namespace API.Controllers
                     Nombre = newUser.Nombre,
                     Apellido = newUser.Apellido,
                     Correo = newUser.Email,
-                    Contrasena = newUser.Password,
                     Telefono = newUser.Telefono,
                     fotoCedula = newUser.fotoCedula,
                     fotoPerfil = newUser.fotoPerfil,
@@ -163,5 +166,34 @@ namespace API.Controllers
             // Si hubo algún error al agregar el rol
             return BadRequest("No se pudo agregar el rol de Admin al usuario");
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser(string userName)
+        {
+            // Find the user by their username
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // Delete the user
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return Ok("User deleted successfully");
+            }
+
+            // If there were any errors during the deletion process
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+        }
+
     }
 }

@@ -16,10 +16,6 @@ namespace DTO
         [Required]
         public string Nombre { get; set; }
         [Required]
-        public string Descripcion { get; set; }
-        [Required]
-        public double Costo { get; set; }
-        
-        
+        public double Costo { get; set; }        
     }
 }
