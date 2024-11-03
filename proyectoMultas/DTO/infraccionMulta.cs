@@ -18,5 +18,9 @@ namespace DTO
 
         [ForeignKey("Multas")]
         public int idMulta { get; set; }
+
+        public Multas Multa { get; set; }
+        public CatalogoInfracciones Infraccion { get; set; }
+
     }
 }

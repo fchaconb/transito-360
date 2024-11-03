@@ -22,14 +22,18 @@ namespace DTO
         [Required]
         public string declaracion { get; set; }
 
-        [ForeignKey("Multas")]
+        [ForeignKey("Multa")]
         public int idMulta { get; set; }
 
-        [ForeignKey("Usuario")]
-        public int idUsuarioFinal { get; set; }
-        [ForeignKey("Usuario")]
-        public int idOficial { get; set; }
-        [ForeignKey("Usuario")]
-        public int idJuez { get; set; }
+        public Multas Multa { get; set; }
+
+        // Relaciones con Usuario para diferentes roles
+        public int IdUsuarioFinal { get; set; }
+        public Usuario UsuarioFinal { get; set; }
+
+        public int IdOficial { get; set; }
+        public Usuario UsuarioOficial { get; set; }
+        public int IdJuez { get; set; }
+        public Usuario Juez { get; set; }
     }
 }

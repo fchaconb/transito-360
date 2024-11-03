@@ -24,5 +24,7 @@ namespace DTO
         [Required]
         [ForeignKey("Usuario")]
         public int IdUsuario { get; set; }
+
+        public Usuario Usuario { get; set; }
     }
 }

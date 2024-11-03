@@ -14,6 +14,8 @@ namespace DTO
         public string Id { get; set; }
 
         [ForeignKey("Usuario")]
-        public int UsuarioId { get; set; }
+        public int IdUsuario { get; set; }
+
+        public virtual ICollection<Multas> Multas { get; set; } = new List<Multas>();
     }
 }

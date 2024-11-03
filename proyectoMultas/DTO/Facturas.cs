@@ -28,5 +28,9 @@ namespace DTO
         [ForeignKey("Multa")]
         public int IdMulta { get; set; }
 
+        public Usuario Usuario { get; set; }
+
+        public ICollection<Multas> Multas { get; set; }
+
     }
 }
