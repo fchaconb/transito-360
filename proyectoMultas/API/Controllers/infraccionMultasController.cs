@@ -47,7 +47,7 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutinfraccionMulta(int id, infraccionMulta infraccionMulta)
         {
-            if (id != infraccionMulta.Id)
+            if (id != infraccionMulta.CatalogoInfraccionesId)
             {
                 return BadRequest();
             }
@@ -79,9 +79,23 @@ namespace API.Controllers
         public async Task<ActionResult<infraccionMulta>> PostinfraccionMulta(infraccionMulta infraccionMulta)
         {
             _context.infraccionMulta.Add(infraccionMulta);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (infraccionMultaExists(infraccionMulta.CatalogoInfraccionesId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetinfraccionMulta", new { id = infraccionMulta.Id }, infraccionMulta);
+            return CreatedAtAction("GetinfraccionMulta", new { id = infraccionMulta.CatalogoInfraccionesId }, infraccionMulta);
         }
 
         // DELETE: api/infraccionMultas/5
@@ -102,7 +116,7 @@ namespace API.Controllers
 
         private bool infraccionMultaExists(int id)
         {
-            return _context.infraccionMulta.Any(e => e.Id == id);
+            return _context.infraccionMulta.Any(e => e.CatalogoInfraccionesId == id);
         }
     }
 }

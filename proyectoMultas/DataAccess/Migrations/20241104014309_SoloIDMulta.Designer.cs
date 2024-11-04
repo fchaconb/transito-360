@@ -4,6 +4,7 @@ using DataAccess.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241104014309_SoloIDMulta")]
+    partial class SoloIDMulta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +130,7 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("IdInfractor")
+                    b.Property<int>("IdInfractor")
                         .HasColumnType("int");
 
                     b.Property<int>("IdOficial")
@@ -157,8 +160,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("pagada")
-                        .HasColumnType("bit");
+                    b.Property<string>("pagada")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("total")
                         .HasColumnType("float");
@@ -224,7 +228,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -377,13 +381,21 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DTO.infraccionMulta", b =>
                 {
-                    b.Property<int>("CatalogoInfraccionesId")
+                    b.Property<int>("idInfraccion")
                         .HasColumnType("int");
 
-                    b.Property<int>("MultasId")
+                    b.Property<int>("idMulta")
                         .HasColumnType("int");
 
-                    b.HasKey("CatalogoInfraccionesId", "MultasId");
+                    b.Property<int?>("CatalogoInfraccionesId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MultasId")
+                        .HasColumnType("int");
+
+                    b.HasKey("idInfraccion", "idMulta");
+
+                    b.HasIndex("CatalogoInfraccionesId");
 
                     b.HasIndex("MultasId");
 
@@ -392,15 +404,15 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DTO.multaPlaca", b =>
                 {
-                    b.Property<int>("MultasId")
+                    b.Property<int>("idMulta")
                         .HasColumnType("int");
 
-                    b.Property<string>("PlacasId")
+                    b.Property<string>("idPlaca")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("MultasId", "PlacasId");
+                    b.HasKey("idMulta", "idPlaca");
 
-                    b.HasIndex("PlacasId");
+                    b.HasIndex("idPlaca");
 
                     b.ToTable("multaPlacas");
                 });
@@ -608,7 +620,8 @@ namespace DataAccess.Migrations
                     b.HasOne("DTO.Usuario", null)
                         .WithMany()
                         .HasForeignKey("IdInfractor")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("DTO.Usuario", null)
                         .WithMany()
@@ -621,7 +634,9 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DTO.Usuario", null)
                         .WithMany("Placas")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DTO.Ticket", b =>
@@ -646,30 +661,30 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DTO.CatalogoInfracciones", null)
                         .WithMany("infraccionMultas")
-                        .HasForeignKey("CatalogoInfraccionesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CatalogoInfraccionesId");
 
                     b.HasOne("DTO.Multas", null)
                         .WithMany("infraccionMultas")
-                        .HasForeignKey("MultasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MultasId");
                 });
 
             modelBuilder.Entity("DTO.multaPlaca", b =>
                 {
-                    b.HasOne("DTO.Multas", null)
+                    b.HasOne("DTO.Multas", "Multas")
                         .WithMany("multaPlacas")
-                        .HasForeignKey("MultasId")
+                        .HasForeignKey("idMulta")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DTO.Placas", null)
+                    b.HasOne("DTO.Placas", "Placas")
                         .WithMany("multaPlacas")
-                        .HasForeignKey("PlacasId")
+                        .HasForeignKey("idPlaca")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Multas");
+
+                    b.Navigation("Placas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

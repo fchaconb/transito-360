@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241103204904_FotoPerfilNull")]
-    partial class FotoPerfilNull
+    [Migration("20241104011644_Placa-MultaPlacaNotNull")]
+    partial class PlacaMultaPlacaNotNull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,6 +130,9 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("IdInfractor")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdOficial")
                         .HasColumnType("int");
 
@@ -165,6 +168,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdInfractor");
+
+                    b.HasIndex("IdOficial");
 
                     b.ToTable("Multas");
                 });
@@ -364,7 +371,8 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Correo");
+                    b.HasIndex("Correo")
+                        .IsUnique();
 
                     b.HasIndex("IdRol");
 
@@ -373,38 +381,30 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DTO.infraccionMulta", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("idInfraccion")
                         .HasColumnType("int");
 
                     b.Property<int>("idMulta")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("idInfraccion", "idMulta");
+
+                    b.HasIndex("idMulta");
 
                     b.ToTable("infraccionMulta");
                 });
 
             modelBuilder.Entity("DTO.multaPlaca", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("idMulta")
                         .HasColumnType("int");
 
-                    b.Property<int>("idPlaca")
-                        .HasColumnType("int");
+                    b.Property<string>("idPlaca")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("idMulta", "idPlaca");
+
+                    b.HasIndex("idPlaca");
 
                     b.ToTable("multaPlacas");
                 });
@@ -607,6 +607,21 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DTO.Multas", b =>
+                {
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdInfractor")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdOficial")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DTO.Placas", b =>
                 {
                     b.HasOne("DTO.Usuario", null)
@@ -630,8 +645,46 @@ namespace DataAccess.Migrations
                     b.HasOne("DTO.Rol", null)
                         .WithMany()
                         .HasForeignKey("IdRol")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.infraccionMulta", b =>
+                {
+                    b.HasOne("DTO.CatalogoInfracciones", "CatalogoInfracciones")
+                        .WithMany("infraccionMultas")
+                        .HasForeignKey("idInfraccion")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DTO.Multas", "Multas")
+                        .WithMany("infraccionMultas")
+                        .HasForeignKey("idMulta")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CatalogoInfracciones");
+
+                    b.Navigation("Multas");
+                });
+
+            modelBuilder.Entity("DTO.multaPlaca", b =>
+                {
+                    b.HasOne("DTO.Multas", "Multas")
+                        .WithMany("multaPlacas")
+                        .HasForeignKey("idMulta")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DTO.Placas", "Placas")
+                        .WithMany("multaPlacas")
+                        .HasForeignKey("idPlaca")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Multas");
+
+                    b.Navigation("Placas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -683,6 +736,23 @@ namespace DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.CatalogoInfracciones", b =>
+                {
+                    b.Navigation("infraccionMultas");
+                });
+
+            modelBuilder.Entity("DTO.Multas", b =>
+                {
+                    b.Navigation("infraccionMultas");
+
+                    b.Navigation("multaPlacas");
+                });
+
+            modelBuilder.Entity("DTO.Placas", b =>
+                {
+                    b.Navigation("multaPlacas");
                 });
 
             modelBuilder.Entity("DTO.User", b =>
