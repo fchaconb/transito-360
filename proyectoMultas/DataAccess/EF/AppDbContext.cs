@@ -41,16 +41,43 @@ namespace DataAccess.EF
             modelBuilder.Entity<User>()
                 .HasMany(t => t.Tickets);
 
+            //Usuario y Placas
             modelBuilder.Entity<Usuario>()
                 .HasMany(p => p.Placas);
 
+            //Usuario y Rol
             modelBuilder.Entity<Usuario>()
                 .HasOne<Rol>()
                 .WithMany()
-                .HasForeignKey(r => r.IdRol);
+                .HasForeignKey(r => r.IdRol)
+                .OnDelete(DeleteBehavior.NoAction);
 
+            //Correo unico
             modelBuilder.Entity<Usuario>()
-                .HasIndex(u => u.Correo);
+                .HasIndex(u => u.Correo)
+                .IsUnique();
+
+            //Many to Many Multas y Infracciones
+            modelBuilder.Entity<infraccionMulta>()
+                .HasKey(im => new { im.CatalogoInfraccionesId, im.MultasId });
+
+            //Many to Many Multas y Placas
+            modelBuilder.Entity<multaPlaca>()
+                .HasKey(mp => new { mp.MultasId, mp.PlacasId });
+
+            //1-1 Multas y Usuario Final
+            modelBuilder.Entity<Multas>()
+                .HasOne<Usuario>()
+                .WithMany()
+                .HasForeignKey(m => m.IdInfractor)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            //1-1 Multas y Usuario Oficial
+            modelBuilder.Entity<Multas>()
+                .HasOne<Usuario>()
+                .WithMany()
+                .HasForeignKey(m => m.IdOficial)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

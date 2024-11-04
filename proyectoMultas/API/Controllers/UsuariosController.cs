@@ -69,6 +69,21 @@ namespace API.Controllers
             return usuario;
         }
 
+        //GET: api/Usuarios/Cedula
+        [HttpGet("Cedula/{cedula}")]
+        public async Task<ActionResult<Usuario>> GetUsuarioByCedula(int cedula)
+        {
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Cedula == cedula);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return usuario;
+        }
+
         // PUT: api/Usuarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

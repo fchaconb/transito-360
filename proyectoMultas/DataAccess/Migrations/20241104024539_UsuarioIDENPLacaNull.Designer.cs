@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241030030238_PostUsuarioPlaca")]
-    partial class PostUsuarioPlaca
+    [Migration("20241104024539_UsuarioIDENPLacaNull")]
+    partial class UsuarioIDENPLacaNull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,10 +36,6 @@ namespace DataAccess.Migrations
                     b.Property<double>("Costo")
                         .HasColumnType("float");
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -47,6 +43,47 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CatalogoInfracciones");
+                });
+
+            modelBuilder.Entity("DTO.Disputas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("declaracion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("idJuez")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idMulta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idOficial")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUsuarioFinal")
+                        .HasColumnType("int");
+
+                    b.Property<string>("razon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("disputas");
                 });
 
             modelBuilder.Entity("DTO.Facturas", b =>
@@ -93,6 +130,9 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("IdInfractor")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdOficial")
                         .HasColumnType("int");
 
@@ -120,14 +160,17 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("pagada")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("pagada")
+                        .HasColumnType("bit");
 
                     b.Property<double>("total")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdInfractor");
+
+                    b.HasIndex("IdOficial");
 
                     b.ToTable("Multas");
                 });
@@ -184,7 +227,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -304,10 +347,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("Cedula")
                         .HasColumnType("int");
 
-                    b.Property<string>("Contrasena")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Correo")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -327,12 +366,12 @@ namespace DataAccess.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("fotoPerfil")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Correo");
+                    b.HasIndex("Correo")
+                        .IsUnique();
 
                     b.HasIndex("IdRol");
 
@@ -341,38 +380,30 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DTO.infraccionMulta", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("CatalogoInfraccionesId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("idInfraccion")
+                    b.Property<int>("MultasId")
                         .HasColumnType("int");
 
-                    b.Property<int>("idMulta")
-                        .HasColumnType("int");
+                    b.HasKey("CatalogoInfraccionesId", "MultasId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("MultasId");
 
                     b.ToTable("infraccionMulta");
                 });
 
             modelBuilder.Entity("DTO.multaPlaca", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("MultasId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("PlacasId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("idMulta")
-                        .HasColumnType("int");
+                    b.HasKey("MultasId", "PlacasId");
 
-                    b.Property<int>("idPlaca")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasIndex("PlacasId");
 
                     b.ToTable("multaPlacas");
                 });
@@ -575,13 +606,25 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DTO.Multas", b =>
+                {
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdInfractor")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdOficial")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DTO.Placas", b =>
                 {
                     b.HasOne("DTO.Usuario", null)
                         .WithMany("Placas")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("DTO.Ticket", b =>
@@ -598,6 +641,36 @@ namespace DataAccess.Migrations
                     b.HasOne("DTO.Rol", null)
                         .WithMany()
                         .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.infraccionMulta", b =>
+                {
+                    b.HasOne("DTO.CatalogoInfracciones", null)
+                        .WithMany("infraccionMultas")
+                        .HasForeignKey("CatalogoInfraccionesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DTO.Multas", null)
+                        .WithMany("infraccionMultas")
+                        .HasForeignKey("MultasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.multaPlaca", b =>
+                {
+                    b.HasOne("DTO.Multas", null)
+                        .WithMany("multaPlacas")
+                        .HasForeignKey("MultasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DTO.Placas", null)
+                        .WithMany("multaPlacas")
+                        .HasForeignKey("PlacasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -651,6 +724,23 @@ namespace DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.CatalogoInfracciones", b =>
+                {
+                    b.Navigation("infraccionMultas");
+                });
+
+            modelBuilder.Entity("DTO.Multas", b =>
+                {
+                    b.Navigation("infraccionMultas");
+
+                    b.Navigation("multaPlacas");
+                });
+
+            modelBuilder.Entity("DTO.Placas", b =>
+                {
+                    b.Navigation("multaPlacas");
                 });
 
             modelBuilder.Entity("DTO.User", b =>

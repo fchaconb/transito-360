@@ -10,13 +10,10 @@ namespace DTO
 {
     public class infraccionMulta
     {
-        [Key]
-        public int Id { get; set; }
-
         [ForeignKey("CatalogoInfracciones")]
-        public int idInfraccion { get; set; }
+        public int CatalogoInfraccionesId { get; set; }
 
         [ForeignKey("Multas")]
-        public int idMulta { get; set; }
+        public int MultasId { get; set; }
     }
 }

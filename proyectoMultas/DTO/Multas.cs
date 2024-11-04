@@ -26,7 +26,7 @@ namespace DTO
         [Required]
         public DateTime fecha { get; set; }
         [Required]
-        public string pagada { get; set; }
+        public bool pagada { get; set; }
         [Required]
         public string fotoSinpe {  get; set; }
         [Required]
@@ -34,5 +34,11 @@ namespace DTO
 
         [ForeignKey("Usuario")]
         public int IdOficial { get; set; }
+
+        [ForeignKey("Usuario")]
+        public int? IdInfractor { get; set; }
+
+        public ICollection<infraccionMulta> infraccionMultas { get; set; }
+        public ICollection<multaPlaca> multaPlacas { get; set; }
     }
 }

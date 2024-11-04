@@ -47,7 +47,7 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutmultaPlaca(int id, multaPlaca multaPlaca)
         {
-            if (id != multaPlaca.Id)
+            if (id != multaPlaca.MultasId)
             {
                 return BadRequest();
             }
@@ -79,9 +79,23 @@ namespace API.Controllers
         public async Task<ActionResult<multaPlaca>> PostmultaPlaca(multaPlaca multaPlaca)
         {
             _context.multaPlacas.Add(multaPlaca);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (multaPlacaExists(multaPlaca.MultasId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetmultaPlaca", new { id = multaPlaca.Id }, multaPlaca);
+            return CreatedAtAction("GetmultaPlaca", new { id = multaPlaca.MultasId }, multaPlaca);
         }
 
         // DELETE: api/multaPlacas/5
@@ -102,7 +116,7 @@ namespace API.Controllers
 
         private bool multaPlacaExists(int id)
         {
-            return _context.multaPlacas.Any(e => e.Id == id);
+            return _context.multaPlacas.Any(e => e.MultasId == id);
         }
     }
 }
