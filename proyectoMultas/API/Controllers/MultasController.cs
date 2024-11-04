@@ -42,6 +42,17 @@ namespace API.Controllers
             return multas;
         }
 
+        //GET: api/Multas/InfractorID
+        [HttpGet("IdInfractor/{infractorID}")]
+        public async Task<ActionResult<IEnumerable<Multas>>> GetMultasByInfractorID(int infractorID)
+        {
+            var multas = await _context.Multas
+                .Where(m => m.IdInfractor == infractorID)
+                .ToListAsync();
+
+            return multas;
+        }
+
         // PUT: api/Multas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
