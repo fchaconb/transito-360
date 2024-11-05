@@ -48,6 +48,8 @@ namespace API.Controllers
         {
             var multas = await _context.Multas
                 .Where(m => m.IdInfractor == infractorID)
+                .Include(m => m.multaPlacas)
+                .Include(m => m.infraccionMultas)
                 .ToListAsync();
 
             return multas;

@@ -54,6 +54,17 @@ namespace API.Controllers
             return usuarios;
         }
 
+        // GET: api/Usuarios/Role/1
+        [HttpGet("Role/{roleId}")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuariosInRole(int roleId)
+        {
+            var usuarios = await _context.Usuarios
+                .Where(u => u.IdRol == roleId)
+                .ToListAsync();
+
+            return usuarios;
+        }
+
         //GET: api/Usuarios/email
         [HttpGet("email/{email}")]
         public async Task<ActionResult<Usuario>> GetUsuarioByEmail(string email)
