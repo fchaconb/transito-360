@@ -19,8 +19,7 @@ namespace DTO
         public string descripcion { get; set; }
         [Required]
         public string estado { get; set; }
-        [Required]
-        public string declaracion { get; set; }
+        public string? declaracion { get; set; }
 
         [ForeignKey("Multas")]
         public int idMulta { get; set; }
