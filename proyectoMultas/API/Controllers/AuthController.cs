@@ -195,5 +195,35 @@ namespace API.Controllers
             return BadRequest(ModelState);
         }
 
+        // PUT: Update user password
+        [HttpPut]
+        public async Task<IActionResult> UpdatePassword(string userName, string newPassword)
+        {
+            // Find the user by their username
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // Update the user's password
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok("Password updated successfully");
+            }
+
+            // If there were any errors during the password update process
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+        }
+
     }
 }
