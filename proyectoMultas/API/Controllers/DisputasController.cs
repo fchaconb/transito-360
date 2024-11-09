@@ -53,6 +53,17 @@ namespace API.Controllers
             return disputas;
         }
 
+        //Get: api/Disputas/JuezID
+        [HttpGet("IdJuez/{juezID}")]
+        public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByJuezID(int juezID)
+        {
+            var disputas = await _context.disputas
+                .Where(d => d.idJuez == juezID)
+                .ToListAsync();
+
+            return disputas;
+        }
+
         // PUT: api/Disputas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
