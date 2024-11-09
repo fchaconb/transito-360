@@ -54,11 +54,23 @@ namespace API.Controllers
         }
 
         //Get: api/Disputas/JuezID
-        [HttpGet("IdJuez/{juezID}")]
-        public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByJuezID(int juezID)
+        [HttpGet("IdJuez/{juezID}/Resolved")]
+        public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByJuezIDResolved(int juezID)
         {
             var disputas = await _context.disputas
-                .Where(d => d.idJuez == juezID)
+                .Where(d => d.idJuez == juezID && d.estado == "Resuelta")
+                .ToListAsync();
+
+            return disputas;
+        }
+
+
+        //Get: api/Disputas/JuezID and not resolved
+        [HttpGet("IdJuez/{juezID}/NotResolved")]
+        public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByJuezIDNotResolved(int juezID)
+        {
+            var disputas = await _context.disputas
+                .Where(d => d.idJuez == juezID && d.estado != "Resuelta")
                 .ToListAsync();
 
             return disputas;
