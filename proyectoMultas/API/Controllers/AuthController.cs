@@ -8,6 +8,13 @@ using System.Security.Claims;
 using System.Text;
 using BusinessLogic;
 using DataAccess.EF;
+using OtpNet;
+using BusinessLogic.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using BusinessLogic.Services;
+using System.Net.Mail;
+using MimeKit;
+using System.Net;
 
 namespace API.Controllers
 {
@@ -19,12 +26,21 @@ namespace API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly AppDbContext contexto;
+        private readonly ITwoFactorAuthService _twoFactorAuthService;
+        private readonly IQrCodeService _qrCodeService;
 
-        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration, AppDbContext context)
+        public AuthController(
+         UserManager<IdentityUser> userManager,
+         IConfiguration configuration,
+         AppDbContext context,
+         ITwoFactorAuthService twoFactorAuthService = null,
+        IQrCodeService qrCodeService = null)
         {
             _userManager = userManager;
             _configuration = configuration;
             contexto = context;
+            _twoFactorAuthService = twoFactorAuthService ?? new TwoFactorAuthService();
+            _qrCodeService = qrCodeService ?? new QrCodeService();
         }
 
         [HttpPost]
@@ -204,7 +220,7 @@ namespace API.Controllers
 
             if (user == null)
             {
-                return NotFound("User not found");
+                return NotFound("Usuario no encontrado");
             }
 
             // Update the user's password
@@ -213,7 +229,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                return Ok("Password updated successfully");
+                return Ok("Contraseña actualizada con éxito");
             }
 
             // If there were any errors during the password update process
@@ -225,6 +241,134 @@ namespace API.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPost]
+        [Route("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        {
+            // Find the user by email
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return BadRequest("User with the provided email does not exist.");
+            }
+
+            // Generate password reset token
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            //var scheme = Request?.Scheme ?? "http"; //
+            //var host = Request?.Host.Value ?? "localhost:3000";
+            var scheme = "http";
+            var host = "localhost:3000";
+
+            var resetUrl = $"{scheme}://{host}/login";
+
+            // Send email with the reset link
+            var emailSent = await SendPasswordResetEmail(user.Email, resetUrl, token);
+
+            if (emailSent)
+            {
+                return Ok("Password reset email sent.");
+            }
+
+            return StatusCode(500, "There was an error sending the reset email.");
+        }
+
+
+        private async Task<bool> SendPasswordResetEmail(string toEmail, string resetUrl, string token)
+        {
+            try
+            {
+                var correo = new MailMessage
+                {
+                    From = new MailAddress("carolina.residenciadevida@gmail.com"),
+                    Subject = "Solicitud para recuperar contraseña",
+                    Body = $"Puede recuperar su contraseña haciendo click en el siguiente enlace: {resetUrl}, utilizando el siguiente token: {token} ",
+                    IsBodyHtml = true
+                };
+                correo.To.Add(toEmail);
+
+                using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtpClient.EnableSsl = true;
+                    smtpClient.Credentials = new NetworkCredential("carolina.residenciadevida@gmail.com", "teye iucc maxo erqa\r\n"); // Usa aquí la contraseña de aplicación si la tienes
+                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                    await smtpClient.SendMailAsync(correo);
+                }
+
+                return true;
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine("Error al enviar el correo: " + ex.Message);
+                return false;
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Activate2FA(string userId)
+        {
+            // Genera una clave secreta única para el usuario
+            var secretKey = _twoFactorAuthService.GenerateSecretKey();
+
+            // Genera la URL del QR para configurar 2FA en una app de autenticación
+            var urlQr = _qrCodeService.GenerateQrCodeUrl(userId, "MyApp", secretKey);
+
+            // Opcional: guarda el `secretKey` en la base de datos para el usuario específico
+            await SaveUserSecretKey(userId, secretKey);
+
+            return Ok(new { secretKey, urlQr });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Verify2FA(string userId, string code)
+        {
+            // Recupera la clave secreta almacenada para el usuario
+            var secretKey = await GetUserSecretKey(userId);
+
+            if (secretKey == null)
+            {
+                return NotFound("El usuario no tiene 2FA activado.");
+            }
+
+            // Verifica el código utilizando la clave secreta
+            bool isValid = _twoFactorAuthService.Validate2FACode(secretKey, code);
+
+            if (isValid)
+            {
+                return Ok("Código 2FA válido.");
+            }
+
+            return Unauthorized("Código 2FA inválido.");
+        }
+
+        private async Task<string> GetUserSecretKey(string userId)
+        {
+            // Implementación para recuperar la clave secreta del usuario en la base de datos.
+            // Esto depende de cómo hayas configurado el almacenamiento de usuarios.
+            return await contexto.Usuarios
+                .Where(u => u.Id == int.Parse(userId))
+                .Select(u => u.SecretKey)
+                .FirstOrDefaultAsync();
+        }
+
+        private async Task SaveUserSecretKey(string userId, string secretKey)
+        {
+            // Implementación para guardar la clave secreta en la base de datos
+            var usuario = await contexto.Usuarios.FirstOrDefaultAsync(u => u.Id == int.Parse(userId));
+            if (usuario != null)
+            {
+                usuario.SecretKey = secretKey;
+                await contexto.SaveChangesAsync();
+            }
+        }
     }
+
 }
-}
+
+
+
+
+

@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace API
 {
@@ -118,5 +121,16 @@ namespace API
 
             app.Run();
         }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddScoped<ITwoFactorAuthService, TwoFactorAuthService>();
+            services.AddScoped<IQrCodeService, QrCodeService>();
+            services.AddSingleton<BusinessLogic.Interfaces.IEmailSender, SmtpEmailSender>();
+
+            // Otros servicios
+            services.AddControllers();
+        }
+
     }
 }
