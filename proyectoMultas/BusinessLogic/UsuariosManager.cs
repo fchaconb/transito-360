@@ -39,11 +39,5 @@ namespace BusinessLogic
 
             return usuario;
         }
-
-
-
-
-
-
-    }
+}
 }
