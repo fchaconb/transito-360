@@ -1,0 +1,7 @@
+# Connection String para Docker
+
+"DefaultConnection": "Server=localhost,1433;Database=Proyecto2;User Id=fchacon;Password=qradar.1;TrustServerCertificate=true"
+
+# Connection String para DB en compu
+
+"DefaultConnection": "Server=localhost;Database=Proyecto2;Trusted_Connection=True;TrustServerCertificate=True;"
