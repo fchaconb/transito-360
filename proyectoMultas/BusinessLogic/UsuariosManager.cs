@@ -40,10 +40,54 @@ namespace BusinessLogic
             return usuario;
         }
 
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        {
+            var user = await _userService.GetUserByEmailAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest("El correo no está registrado.");
+            }
 
+            // Generar token de restablecimiento
+            string token = Guid.NewGuid().ToString();
+            await _userService.SavePasswordResetTokenAsync(user.Id, token);
 
+            // Enviar correo con el enlace de restablecimiento
+            string urlRestablecimiento = $"https://tu-dominio.com/reset-password?token={token}";
+            await EnviarCorreoRestablecimiento(request.Email, urlRestablecimiento);
 
+            return Ok("Correo de restablecimiento enviado.");
+        }
 
+        private async Task EnviarCorreoRestablecimiento(string email, string urlRestablecimiento)
+        {
+            var message = new MailMessage();
+            message.From = new MailAddress("tu-correo@dominio.com");
+            message.To.Add(email);
+            message.Subject = "Restablecimiento de Contraseña";
+            message.Body = $"Haz clic en el siguiente enlace para restablecer tu contraseña: {urlRestablecimiento}";
+            message.IsBodyHtml = true;
 
+            using var client = new SmtpClient("smtp.dominio.com", 587)
+            {
+                Credentials = new NetworkCredential("tu-correo@dominio.com", "tu-contraseña"),
+                EnableSsl = true
+            };
+
+            await client.SendMailAsync(message);
+        }
     }
+
+    public class ForgotPasswordRequest
+    {
+        public string Email { get; set; }
+    }
+
+
+
+
+
+
+}
 }
