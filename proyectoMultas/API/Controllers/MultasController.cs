@@ -32,7 +32,11 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Multas>> GetMultas(int id)
         {
-            var multas = await _context.Multas.FindAsync(id);
+            var multas = await _context.Multas
+                .Include(m => m.multaPlacas)
+                .Include(m => m.infraccionMultas)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
 
             if (multas == null)
             {
@@ -48,6 +52,32 @@ namespace API.Controllers
         {
             var multas = await _context.Multas
                 .Where(m => m.IdInfractor == infractorID)
+                .Include(m => m.multaPlacas)
+                .Include(m => m.infraccionMultas)
+                .ToListAsync();
+
+            return multas;
+        }
+
+        //GET: api/Multas/InfractorID/Resolved
+        [HttpGet("IdInfractor/{infractorID}/Resolved")]
+        public async Task<ActionResult<IEnumerable<Multas>>> GetMultasByInfractorIDResolved(int infractorID)
+        {
+            var multas = await _context.Multas
+                .Where(m => m.IdInfractor == infractorID && m.resuelta == true)
+                .Include(m => m.multaPlacas)
+                .Include(m => m.infraccionMultas)
+                .ToListAsync();
+
+            return multas;
+        }
+
+        //GET: api/Multas/InfractorID/NotResolved
+        [HttpGet("IdInfractor/{infractorID}/NotResolved")]
+        public async Task<ActionResult<IEnumerable<Multas>>> GetMultasByInfractorIDNotResolved(int infractorID)
+        {
+            var multas = await _context.Multas
+                .Where(m => m.IdInfractor == infractorID && m.resuelta == false)
                 .Include(m => m.multaPlacas)
                 .Include(m => m.infraccionMultas)
                 .ToListAsync();

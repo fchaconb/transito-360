@@ -20,6 +20,8 @@ namespace DTO
         [Required]
         public string estado { get; set; }
         [Required]
+        public string resolucion { get; set; }
+        [Required]
         public bool necesitaDeclaracion { get; set; }
         public string? declaracion { get; set; }
 
