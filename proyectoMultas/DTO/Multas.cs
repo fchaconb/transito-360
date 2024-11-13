@@ -28,6 +28,8 @@ namespace DTO
         [Required]
         public bool pagada { get; set; }
         [Required]
+        public bool resuelta { get; set; }
+        [Required]
         public string fotoSinpe {  get; set; }
         [Required]
         public double total { get; set; }
