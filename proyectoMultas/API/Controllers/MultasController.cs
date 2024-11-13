@@ -85,6 +85,19 @@ namespace API.Controllers
             return multas;
         }
 
+        // GET: api/Multas/OficialID
+        [HttpGet("IdOficial/{oficialID}")]
+        public async Task<ActionResult<IEnumerable<Multas>>> GetMultasByOficialID(int oficialID)
+        {
+            var multas = await _context.Multas
+                .Where(m => m.IdOficial == oficialID)
+                .Include(m => m.multaPlacas)
+                .Include(m => m.infraccionMultas)
+                .ToListAsync();
+
+            return multas;
+        }
+
         // PUT: api/Multas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
