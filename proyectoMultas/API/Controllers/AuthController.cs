@@ -15,6 +15,7 @@ using BusinessLogic.Services;
 using System.Net.Mail;
 using MimeKit;
 using System.Net;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace API.Controllers
 {
@@ -213,10 +214,10 @@ namespace API.Controllers
 
         // PUT: Update user password
         [HttpPut]
-        public async Task<IActionResult> UpdatePassword(string userName, string newPassword)
+        public async Task<IActionResult> UpdatePassword(string email, string newPassword)
         {
             // Find the user by their username
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -242,34 +243,59 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] string email)
         {
-            // Find the user by email
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
-                return BadRequest("User with the provided email does not exist.");
+                return BadRequest("El usuario proporcionado no existe");
             }
 
-            // Generate password reset token
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            //var scheme = Request?.Scheme ?? "http"; //
-            //var host = Request?.Host.Value ?? "localhost:3000";
-            var scheme = "http";
-            var host = "localhost:3000";
+            var removeResult = await _userManager.RemovePasswordAsync(user);
 
-            var resetUrl = $"{scheme}://{host}/login";
-
-            // Send email with the reset link
-            var emailSent = await SendPasswordResetEmail(user.Email, resetUrl, token);
-
-            if (emailSent)
+            if (removeResult.Succeeded)
             {
-                return Ok("Password reset email sent.");
+                
+                var addPasswordResult = await _userManager.AddPasswordAsync(user, token);
+
+                if (addPasswordResult.Succeeded)
+                {
+                    Console.WriteLine("Password reset successful.");
+
+                    //var scheme = Request?.Scheme ?? "http"; //
+                    //var host = Request?.Host.Value ?? "localhost:3000";
+                    var scheme = "http";
+                    var host = "localhost:3000";
+
+                    var resetUrl = $"{scheme}://{host}/login";
+
+                    var emailSent = await SendPasswordResetEmail(user.Email, resetUrl, token);
+
+                    if (emailSent)
+                    {
+                        return Ok("Enlace para recuperar contraseña ha sido enviado");
+                    }
+                }
+                else
+                {
+                    foreach (var error in addPasswordResult.Errors)
+                    {
+                        Console.WriteLine(error.Description);
+                    }
+                }
             }
+            else
+            {
+                foreach (var error in removeResult.Errors)
+                {
+                    Console.WriteLine(error.Description);
+                }
+            }
+
+
 
             return StatusCode(500, "There was an error sending the reset email.");
         }
