@@ -33,7 +33,10 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Usuarios
+                .Where(u => u.Id == id)
+                .Include(u => u.Placas)
+                .FirstOrDefaultAsync();
 
             if (usuario == null)
             {
@@ -105,7 +108,52 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            var existingUsuario = await _context.Usuarios
+                .Include(u => u.Placas)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (existingUsuario == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties of the existing user
+            existingUsuario.Cedula = usuario.Cedula;
+            existingUsuario.Nombre = usuario.Nombre;
+            existingUsuario.Apellido = usuario.Apellido;
+            existingUsuario.Correo = usuario.Correo;
+            existingUsuario.Telefono = usuario.Telefono;
+            existingUsuario.fotoCedula = usuario.fotoCedula;
+            existingUsuario.fotoPerfil = usuario.fotoPerfil;
+            existingUsuario.IdRol = usuario.IdRol;
+
+            // Update the Placas
+            if (existingUsuario.Placas != null)
+            {
+                existingUsuario.Placas.Clear();
+            }
+            else
+            {
+                existingUsuario.Placas = new List<Placas>();
+            }
+
+            if (usuario.Placas != null)
+            {
+                foreach (var placa in usuario.Placas)
+                {
+                    var existingPlaca = await _context.Placas.FindAsync(placa.Id);
+                    if (existingPlaca != null)
+                    {
+                        existingUsuario.Placas.Add(existingPlaca);
+                    }
+                    else
+                    {
+                        existingUsuario.Placas.Add(new Placas { Id = placa.Id, UsuarioId = existingUsuario.Id });
+                    }
+                }
+            }
+
+            _context.Entry(existingUsuario).State = EntityState.Modified;
 
             try
             {
