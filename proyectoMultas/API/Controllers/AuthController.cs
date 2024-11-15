@@ -258,8 +258,9 @@ namespace API.Controllers
 
             if (removeResult.Succeeded)
             {
-                
-                var addPasswordResult = await _userManager.AddPasswordAsync(user, token);
+                var randomPassword = new PasswordGenerator().GeneratePassword(12);
+
+                var addPasswordResult = await _userManager.AddPasswordAsync(user, randomPassword);
 
                 if (addPasswordResult.Succeeded)
                 {
@@ -272,7 +273,7 @@ namespace API.Controllers
 
                     var resetUrl = $"{scheme}://{host}/login";
 
-                    var emailSent = await SendPasswordResetEmail(user.Email, resetUrl, token);
+                    var emailSent = await SendPasswordResetEmail(user.Email, resetUrl, randomPassword);
 
                     if (emailSent)
                     {
@@ -301,7 +302,7 @@ namespace API.Controllers
         }
 
 
-        private async Task<bool> SendPasswordResetEmail(string toEmail, string resetUrl, string token)
+        private async Task<bool> SendPasswordResetEmail(string toEmail, string resetUrl, string randomPass)
         {
             try
             {
@@ -309,7 +310,7 @@ namespace API.Controllers
                 {
                     From = new MailAddress("carolina.residenciadevida@gmail.com"),
                     Subject = "Solicitud para recuperar contraseña",
-                    Body = $"Puede recuperar su contraseña haciendo click en el siguiente enlace: {resetUrl}, utilizando el siguiente token: {token} ",
+                    Body = $"Puede recuperar su contraseña haciendo click en el siguiente enlace: {resetUrl}, utilizando el siguiente token: {randomPass} ",
                     IsBodyHtml = true
                 };
                 correo.To.Add(toEmail);
@@ -332,6 +333,7 @@ namespace API.Controllers
             }
         }
 
+        /*
 
         [HttpPost]
         public async Task<IActionResult> Activate2FA(string userId)
@@ -390,6 +392,7 @@ namespace API.Controllers
                 await contexto.SaveChangesAsync();
             }
         }
+        */
     }
 
 }
