@@ -297,7 +297,7 @@ namespace API.Controllers
 
 
 
-            return StatusCode(500, "There was an error sending the reset email.");
+            return StatusCode(500, "Hubo un error en el envío del enlace de recuperación");
         }
 
 
@@ -333,7 +333,7 @@ namespace API.Controllers
         }
 
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> Activate2FA(string userId)
         {
             // Genera una clave secreta única para el usuario
@@ -389,7 +389,7 @@ namespace API.Controllers
                 usuario.SecretKey = secretKey;
                 await contexto.SaveChangesAsync();
             }
-        }
+        }*/
     }
 
 }

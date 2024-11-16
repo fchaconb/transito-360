@@ -29,9 +29,6 @@ namespace DTO
         public string fotoCedula { get; set; }
         public string? fotoPerfil { get; set; }
 
-        public string SecretKey { get; set; }
-
-
 
         [Required]
         [ForeignKey("Rol")]
