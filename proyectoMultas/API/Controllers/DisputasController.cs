@@ -76,6 +76,17 @@ namespace API.Controllers
             return disputas;
         }
 
+        //Get: api/Disputas/OficialID and necesitadeclaracion
+        [HttpGet("IdOficial/{oficialID}/NeedsDeclaration")]
+        public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByOficialIDNeedsDeclaration(int oficialID)
+        {
+            var disputas = await _context.disputas
+                .Where(d => d.idOficial == oficialID && d.necesitaDeclaracion == true)
+                .ToListAsync();
+
+            return disputas;
+        }
+
         // PUT: api/Disputas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
