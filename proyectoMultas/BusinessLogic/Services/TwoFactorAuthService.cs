@@ -24,6 +24,10 @@ public class TwoFactorAuthService : ITwoFactorAuthService
         _passwordHasher = new PasswordHasher<IdentityUser>();
     }
 
+    public TwoFactorAuthService()
+    {
+    }
+
     public async Task<ServiceResult> EnableTwoFactorAsync(string email, string password)
     {
         var identityUser = await _userManager.FindByEmailAsync(email);
