@@ -11,7 +11,6 @@ using DataAccess.EF;
 using OtpNet;
 using BusinessLogic.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using BusinessLogic.Services;
 using System.Net.Mail;
 using MimeKit;
 using System.Net;
