@@ -8,6 +8,8 @@ using System.Security.Claims;
 using System.Text;
 using BusinessLogic;
 using DataAccess.EF;
+using Azure.AI.Vision.ImageAnalysis;
+using Azure;
 
 namespace API.Controllers
 {
@@ -80,6 +82,31 @@ namespace API.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            // Crear un analisis de la imagen de la cedula
+            var client = new ImageAnalysisClient(
+                new Uri(_configuration["AzureOCR:Endpoint"]), 
+                new AzureKeyCredential(_configuration["AzureOCR:Key"])
+                );
+
+            var analysisResult = await client.AnalyzeAsync(
+                new Uri(newUser.fotoCedula),
+                VisualFeatures.Read,
+                new ImageAnalysisOptions { Language = "es" }
+                );
+
+            var newFotoCedula = analysisResult.GetRawResponse().Content.ToString();
+            if (newFotoCedula == null)
+            {
+                return BadRequest("Error al analizar la imagen de la cédula");
+            }
+
+            var usuarioManager = new UsuariosManager(contexto);
+            string formattedCedula = usuarioManager.FormatCedula(newUser.Cedula);
+            if (!newFotoCedula.Contains(formattedCedula))
+            {
+                return BadRequest("La cédula no coincide con la imagen");
             }
 
             var user = new AppUser

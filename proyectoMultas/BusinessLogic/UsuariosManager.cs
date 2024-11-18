@@ -39,5 +39,11 @@ namespace BusinessLogic
 
             return usuario;
         }
+
+        public string FormatCedula(int cedula)
+        {
+            string cedulaString = cedula.ToString("D9");
+            return $"{cedulaString[0]} {cedulaString.Substring(1, 4)} {cedulaString.Substring(5, 4)}";
+        }
     }
 }
