@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTO;
 using DataAccess.EF;
+using Azure.AI.Vision.ImageAnalysis;
+using Azure;
 
 namespace API.Controllers
 {
@@ -15,10 +17,12 @@ namespace API.Controllers
     public class MultasController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public MultasController(AppDbContext context)
+        public MultasController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/Multas
@@ -135,6 +139,95 @@ namespace API.Controllers
         public async Task<ActionResult<Multas>> PostMultas(Multas multas)
         {
             _context.Multas.Add(multas);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetMultas", new { id = multas.Id }, multas);
+        }
+
+        // POST: api/Multas/Camaras
+        [HttpPost("Camaras")]
+        public async Task<ActionResult<Multas>> PostMultasFromCameras(Multas multas, string imgURL)
+        {
+            // Crear un analisis de la imagen de la cedula
+            var client = new ImageAnalysisClient(
+                new Uri(_configuration["AzureOCR:Endpoint"]),
+                new AzureKeyCredential(_configuration["AzureOCR:Key"])
+            );
+
+            var analysisResult = await client.AnalyzeAsync(
+                new Uri(imgURL),
+                VisualFeatures.Read,
+                new ImageAnalysisOptions { Language = "es", GenderNeutralCaption = true }
+            );
+
+            string placasId = null;
+            foreach (DetectedTextBlock block in analysisResult.Value.Read.Blocks)
+            {
+                foreach (DetectedTextLine line in block.Lines)
+                {
+                    Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
+
+                    if (System.Text.RegularExpressions.Regex.IsMatch(line.Text, @"^[A-Z]{3}-\d{3}$") || System.Text.RegularExpressions.Regex.IsMatch(line.Text, @"^\d+$"))
+                    {
+                        placasId = line.Text.Replace("-", "");
+                        break;
+                    }
+                }
+                if (placasId != null)
+                {
+                    break;
+                }
+            }
+
+            if (placasId == null)
+            {
+                return BadRequest("No se encontró una placa en la imagen");
+            }
+
+            // Check if the user exists
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == multas.cedulaInfractor);
+            int? usuarioId = user?.Id;
+            multas.IdInfractor = usuarioId;
+
+            // Check if the placasId exists
+            var existingPlacas = await _context.Placas.FindAsync(placasId);
+            if (existingPlacas == null)
+            {
+                // Create a new Placas entry if it doesn't exist
+                var newPlacas = new Placas
+                {
+                    Id = placasId,
+                    UsuarioId = usuarioId
+                };
+                _context.Placas.Add(newPlacas);
+                await _context.SaveChangesAsync();
+            }
+
+            var multa = new Multas
+            {
+                nombreInfractor = multas.nombreInfractor,
+                apellidoInfractor = multas.apellidoInfractor,
+                cedulaInfractor = multas.cedulaInfractor,
+                longitud = multas.longitud,
+                latitud = multas.latitud,
+                fecha = multas.fecha,
+                pagada = multas.pagada,
+                resuelta = multas.resuelta,
+                fotoSinpe = multas.fotoSinpe,
+                total = multas.total,
+                IdOficial = multas.IdOficial,
+                IdInfractor = usuarioId,
+                infraccionMultas = multas.infraccionMultas,
+                multaPlacas = new List<multaPlaca>
+                {
+                    new multaPlaca
+                    {
+                        PlacasId = placasId
+                    }
+                }
+            };
+
+            _context.Multas.Add(multa);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMultas", new { id = multas.Id }, multas);
