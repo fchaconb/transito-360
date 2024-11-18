@@ -29,12 +29,16 @@ namespace DTO
         public string fotoCedula { get; set; }
         public string? fotoPerfil { get; set; }
 
+        // Atributos para 2FA
+        public string? TwoFactorSecretKey { get; set; }  // Clave secreta de 2FA
+        public bool IsTwoFactorEnabled { get; set; } = false;  // Indica si 2FA está habilitado
 
         [Required]
         [ForeignKey("Rol")]
         public int IdRol { get; set; }
 
         public ICollection<Placas>? Placas { get; set; }
+
 
     }
 }

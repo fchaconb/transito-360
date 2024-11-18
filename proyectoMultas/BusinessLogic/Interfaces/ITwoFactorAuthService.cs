@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Exchange.WebServices.Data;
 
 namespace BusinessLogic.Interfaces
 {
     public interface ITwoFactorAuthService
     {
-        string GenerateSecretKey();
-        bool Validate2FACode(string secretKey, string code);
+        Task<ServiceResult> EnableTwoFactorAsync(string email, string password);
+        bool ValidateTwoFactorCode(string email, string totpCode);
+        Task<ServiceResult> DisableTwoFactorAsync(string email, string password);
     }
 }
