@@ -10,6 +10,7 @@ using BusinessLogic;
 using DataAccess.EF;
 using Azure.AI.Vision.ImageAnalysis;
 using Azure;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace API.Controllers
 {
@@ -250,6 +251,41 @@ namespace API.Controllers
             }
 
             return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return BadRequest("El usuario proporcionado no existe");
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var removeResult = await _userManager.RemovePasswordAsync(user);
+
+            if (removeResult.Succeeded)
+            {
+                var randomPassword = new PasswordGenerator().GeneratePassword(12);
+                var addResult = await _userManager.AddPasswordAsync(user, randomPassword);
+
+                if (addResult.Succeeded)
+                {
+                    var emailManager = new EmailManager(_configuration);
+                    await emailManager.SendResetPasswordEmail(email, randomPassword);
+                    return Ok("Se ha enviado un correo con la nueva contraseña");
+                }
+                else
+                {
+                    return BadRequest("Error al generar la nueva contraseña");
+                }
+            }
+
+            return BadRequest("Error al remover la contraseña actual");
+
         }
 
     }
