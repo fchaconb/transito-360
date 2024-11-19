@@ -23,7 +23,7 @@ namespace API.Controllers
         private readonly IConfiguration _configuration;
         private readonly AppDbContext contexto;
 
-        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration, AppDbContext context)
+        public AuthController(UserManager<IdentityUser> userManager,IConfiguration configuration,AppDbContext context)
         {
             _userManager = userManager;
             _configuration = configuration;
@@ -87,7 +87,7 @@ namespace API.Controllers
 
             // Crear un analisis de la imagen de la cedula
             var client = new ImageAnalysisClient(
-                new Uri(_configuration["AzureOCR:Endpoint"]), 
+                new Uri(_configuration["AzureOCR:Endpoint"]),
                 new AzureKeyCredential(_configuration["AzureOCR:Key"])
                 );
 
@@ -289,4 +289,10 @@ namespace API.Controllers
         }
 
     }
+
 }
+
+
+
+
+

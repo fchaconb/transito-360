@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using BusinessLogic.Interfaces;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace API
 {
@@ -22,6 +24,8 @@ namespace API
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<ITwoFactorAuthService, TwoFactorAuthService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -118,5 +122,14 @@ namespace API
 
             app.Run();
         }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddScoped<ITwoFactorAuthService, TwoFactorAuthService>();
+
+            // Otros servicios
+            services.AddControllers();
+        }
+
     }
 }
