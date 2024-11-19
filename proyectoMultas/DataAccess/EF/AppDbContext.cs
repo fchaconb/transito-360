@@ -104,6 +104,18 @@ namespace DataAccess.EF
                 .HasForeignKey(d => d.idJuez)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            //Facturas
+            modelBuilder.Entity<Facturas>()
+                .HasOne<Multas>()
+                .WithMany()
+                .HasForeignKey(f => f.IdMulta)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Facturas>()
+                .HasOne<Usuario>()
+                .WithMany()
+                .HasForeignKey(f => f.IdUsuario)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
