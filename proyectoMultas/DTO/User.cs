@@ -22,5 +22,9 @@ namespace DTO
         public string ProfilePicture { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; }
+
+        public string? PasswordHash { get; set; }
+
+
     }
 }

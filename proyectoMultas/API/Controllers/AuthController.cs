@@ -22,12 +22,18 @@ namespace API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly AppDbContext contexto;
+        private readonly ITwoFactorAuthService _twoFactorAuthService;
 
-        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration, AppDbContext context)
+        public AuthController(
+         UserManager<IdentityUser> userManager,
+         IConfiguration configuration,
+         AppDbContext context,
+         ITwoFactorAuthService twoFactorAuthService = null)
         {
             _userManager = userManager;
             _configuration = configuration;
             contexto = context;
+            _twoFactorAuthService = twoFactorAuthService ?? new TwoFactorAuthService();
         }
 
         [HttpPost]
@@ -87,7 +93,7 @@ namespace API.Controllers
 
             // Crear un analisis de la imagen de la cedula
             var client = new ImageAnalysisClient(
-                new Uri(_configuration["AzureOCR:Endpoint"]), 
+                new Uri(_configuration["AzureOCR:Endpoint"]),
                 new AzureKeyCredential(_configuration["AzureOCR:Key"])
                 );
 
@@ -225,14 +231,14 @@ namespace API.Controllers
 
         // PUT: Update user password
         [HttpPut]
-        public async Task<IActionResult> UpdatePassword(string userName, string newPassword)
+        public async Task<IActionResult> UpdatePassword(string email, string newPassword)
         {
             // Find the user by their username
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
-                return NotFound("User not found");
+                return NotFound("Usuario no encontrado");
             }
 
             // Update the user's password
@@ -241,7 +247,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                return Ok("Password updated successfully");
+                return Ok("Contraseña actualizada con éxito");
             }
 
             // If there were any errors during the password update process
@@ -289,4 +295,10 @@ namespace API.Controllers
         }
 
     }
+
 }
+
+
+
+
+
