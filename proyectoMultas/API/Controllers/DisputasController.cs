@@ -42,6 +42,17 @@ namespace API.Controllers
             return disputas;
         }
 
+        // GET: api/Disputas/MultaID
+        [HttpGet("IdMulta/{multaID}")]
+        public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByMultaID(int multaID)
+        {
+            var disputas = await _context.disputas
+                .Where(d => d.idMulta == multaID)
+                .ToListAsync();
+
+            return disputas;
+        }
+
         // GET: api/Disputas/InfractorID
         [HttpGet("IdInfractor/{infractorID}")]
         public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByInfractorID(int infractorID)

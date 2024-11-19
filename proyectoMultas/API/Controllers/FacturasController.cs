@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTO;
 using DataAccess.EF;
+using BusinessLogic;
 
 namespace API.Controllers
 {
@@ -15,10 +16,12 @@ namespace API.Controllers
     public class FacturasController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public FacturasController(AppDbContext context)
+        public FacturasController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/Facturas
@@ -80,6 +83,17 @@ namespace API.Controllers
         {
             _context.Facturas.Add(facturas);
             await _context.SaveChangesAsync();
+
+            var usuario = await _context.Usuarios.FindAsync(facturas.IdUsuario);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var emailManager = new EmailManager(_configuration);
+                await emailManager.SendFacturaEmail(facturas, usuario);
+            }
 
             return CreatedAtAction("GetFacturas", new { id = facturas.Id }, facturas);
         }
