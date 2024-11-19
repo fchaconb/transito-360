@@ -22,18 +22,12 @@ namespace API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly AppDbContext contexto;
-        private readonly ITwoFactorAuthService _twoFactorAuthService;
 
-        public AuthController(
-         UserManager<IdentityUser> userManager,
-         IConfiguration configuration,
-         AppDbContext context,
-         ITwoFactorAuthService twoFactorAuthService = null)
+        public AuthController(UserManager<IdentityUser> userManager,IConfiguration configuration,AppDbContext context)
         {
             _userManager = userManager;
             _configuration = configuration;
             contexto = context;
-            _twoFactorAuthService = twoFactorAuthService ?? new TwoFactorAuthService();
         }
 
         [HttpPost]
@@ -231,14 +225,14 @@ namespace API.Controllers
 
         // PUT: Update user password
         [HttpPut]
-        public async Task<IActionResult> UpdatePassword(string email, string newPassword)
+        public async Task<IActionResult> UpdatePassword(string userName, string newPassword)
         {
             // Find the user by their username
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByNameAsync(userName);
 
             if (user == null)
             {
-                return NotFound("Usuario no encontrado");
+                return NotFound("User not found");
             }
 
             // Update the user's password
@@ -247,7 +241,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                return Ok("Contraseña actualizada con éxito");
+                return Ok("Password updated successfully");
             }
 
             // If there were any errors during the password update process

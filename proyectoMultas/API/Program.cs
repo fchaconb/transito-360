@@ -26,7 +26,6 @@ namespace API
                 .AddDefaultTokenProviders();
 
             builder.Services.AddScoped<ITwoFactorAuthService, TwoFactorAuthService>();
-            builder.Services.AddSingleton<BusinessLogic.Interfaces.IEmailSender, SmtpEmailSender>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -127,7 +126,6 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ITwoFactorAuthService, TwoFactorAuthService>();
-            services.AddSingleton<BusinessLogic.Interfaces.IEmailSender, SmtpEmailSender>();
 
             // Otros servicios
             services.AddControllers();

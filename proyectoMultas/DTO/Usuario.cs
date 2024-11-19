@@ -33,8 +33,6 @@ namespace DTO
         public string? TwoFactorSecretKey { get; set; }  // Clave secreta de 2FA
         public bool IsTwoFactorEnabled { get; set; } = false;  // Indica si 2FA está habilitado
 
-        //public string SecretKey { get; set; }
-
         [Required]
         [ForeignKey("Rol")]
         public int IdRol { get; set; }
