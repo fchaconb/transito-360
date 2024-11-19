@@ -54,6 +54,17 @@ namespace API.Controllers
         }
 
         //Get: api/Disputas/JuezID
+        [HttpGet("IdJuez/{juezID}")]
+        public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByJuezID(int juezID)
+        {
+            var disputas = await _context.disputas
+                .Where(d => d.idJuez == juezID)
+                .ToListAsync();
+
+            return disputas;
+        }
+
+        //Get: api/Disputas/JuezID/Resolved
         [HttpGet("IdJuez/{juezID}/Resolved")]
         public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByJuezIDResolved(int juezID)
         {
