@@ -1,28 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class NecesitaDeclaracionBool : Migration
+    public partial class DisputaFecha : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "necesitaDeclaracion",
+            migrationBuilder.AddColumn<DateTime>(
+                name: "fecha",
                 table: "disputas",
-                type: "bit",
+                type: "datetime2",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "necesitaDeclaracion",
+                name: "fecha",
                 table: "disputas");
         }
     }

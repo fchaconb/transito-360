@@ -18,6 +18,8 @@ namespace DTO
         [Required]
         public string descripcion { get; set; }
         [Required]
+        public DateTime fecha { get; set; }
+        [Required]
         public string estado { get; set; }
         [Required]
         public string resolucion { get; set; }
