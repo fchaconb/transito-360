@@ -61,6 +61,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("fecha")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("idJuez")
                         .HasColumnType("int");
 
@@ -219,6 +222,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Notificacions");
                 });
@@ -685,6 +690,15 @@ namespace DataAccess.Migrations
                     b.HasOne("DTO.Usuario", null)
                         .WithMany()
                         .HasForeignKey("IdOficial")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.Notificacion", b =>
+                {
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });

@@ -116,6 +116,13 @@ namespace DataAccess.EF
                 .WithMany()
                 .HasForeignKey(f => f.IdUsuario)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            //Notificaciones
+            modelBuilder.Entity<Notificacion>()
+                .HasOne<Usuario>()
+                .WithMany()
+                .HasForeignKey(n => n.IdUsuario)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -11,6 +11,7 @@ using DataAccess.EF;
 using Azure.AI.Vision.ImageAnalysis;
 using Azure;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -142,7 +143,20 @@ namespace API.Controllers
                 var usuarioNuevo = await usuariosManager.CrearUsuario(usuario);
                 if (usuarioNuevo != null)
                 {
-                    return Created("Usuario creado exitosamente", null);
+                    var multasToUpdate = await contexto.Multas
+                        .Where(m => m.cedulaInfractor == usuarioNuevo.Cedula && m.IdInfractor == null)
+                        .ToListAsync();
+
+                    if (multasToUpdate.Any())
+                    {
+                        foreach (var multa in multasToUpdate)
+                        {
+                            multa.IdInfractor = usuarioNuevo.Id;
+                        }
+                        await contexto.SaveChangesAsync();
+                    }
+
+                    return Created("Usuario creado exitosamente", usuario.Id);
                 }
                 else
                 {
