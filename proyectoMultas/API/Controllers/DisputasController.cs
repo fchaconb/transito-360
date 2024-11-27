@@ -103,7 +103,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<Disputas>>> GetDisputasByOficialIDNeedsDeclaration(int oficialID)
         {
             var disputas = await _context.disputas
-                .Where(d => d.idOficial == oficialID && d.necesitaDeclaracion == true)
+                .Where(d => d.idOficial == oficialID && d.necesitaDeclaracion == true && d.estado != "Resuelta")
                 .ToListAsync();
 
             return disputas;
