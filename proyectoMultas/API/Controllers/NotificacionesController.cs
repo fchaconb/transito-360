@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTO;
 using DataAccess.EF;
+using BusinessLogic;
 
 namespace API.Controllers
 {
@@ -15,10 +16,12 @@ namespace API.Controllers
     public class NotificacionesController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public NotificacionesController(AppDbContext context)
+        public NotificacionesController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/Notificaciones
@@ -41,6 +44,18 @@ namespace API.Controllers
 
             return notificacion;
         }
+
+        // GET: api/Notificaciones/UsuarioID
+        [HttpGet("UsuarioID/{usuarioID}")]
+        public async Task<ActionResult<IEnumerable<Notificacion>>> GetNotificacionesByUserID(int usuarioID)
+        {
+            var notificaciones = await _context.Notificacions
+                .Where(n => n.IdUsuario == usuarioID)
+                .ToListAsync();
+
+            return notificaciones;
+        }
+
 
         // PUT: api/Notificaciones/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -80,6 +95,17 @@ namespace API.Controllers
         {
             _context.Notificacions.Add(notificacion);
             await _context.SaveChangesAsync();
+
+            var usuario = await _context.Usuarios.FindAsync(notificacion.IdUsuario);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var emailManager = new EmailManager(_configuration);
+                await emailManager.SendNotificacion(notificacion, usuario);
+            }
 
             return CreatedAtAction("GetNotificacion", new { id = notificacion.Id }, notificacion);
         }

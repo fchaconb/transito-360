@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241112033617_ResueltaYResolucion")]
-    partial class ResueltaYResolucion
+    [Migration("20241126213641_MigracionProyecto2")]
+    partial class MigracionProyecto2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,6 +133,10 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdMulta");
+
+                    b.HasIndex("IdUsuario");
+
                     b.ToTable("Facturas");
                 });
 
@@ -218,6 +222,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Notificacions");
                 });
@@ -340,6 +346,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProfilePicture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -371,12 +380,18 @@ namespace DataAccess.Migrations
                     b.Property<int>("IdRol")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsTwoFactorEnabled")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Telefono")
                         .HasColumnType("int");
+
+                    b.Property<string>("TwoFactorSecretKey")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("fotoCedula")
                         .IsRequired()
@@ -650,6 +665,21 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DTO.Facturas", b =>
+                {
+                    b.HasOne("DTO.Multas", null)
+                        .WithMany()
+                        .HasForeignKey("IdMulta")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DTO.Multas", b =>
                 {
                     b.HasOne("DTO.Usuario", null)
@@ -660,6 +690,15 @@ namespace DataAccess.Migrations
                     b.HasOne("DTO.Usuario", null)
                         .WithMany()
                         .HasForeignKey("IdOficial")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DTO.Notificacion", b =>
+                {
+                    b.HasOne("DTO.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });

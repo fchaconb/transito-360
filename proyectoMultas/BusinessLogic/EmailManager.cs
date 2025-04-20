@@ -55,6 +55,20 @@ namespace BusinessLogic
             var response = await client.SendEmailAsync(msg);
         }
 
+        public async Task SendNotificacion(Notificacion notificacion, Usuario usuario)
+        {
+            var apiKey = _configuration["SendGrid:ApiKey"];
+            var fromEmail = _configuration["SendGrid:FromEmail"];
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(fromEmail);
+            var subject = notificacion.Titulo;
+            var to = new EmailAddress(usuario.Correo);
+            var plainTextContent = notificacion.Descripcion;
+            var htmlContent = notificacion.Descripcion;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
+        }
+
         private string GeneratePDF(Facturas factura, Usuario usuario)
         {
             var pdfPath = Path.Combine(Path.GetTempPath(), $"Factura_{factura.Id}.pdf");

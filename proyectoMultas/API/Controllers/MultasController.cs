@@ -102,6 +102,18 @@ namespace API.Controllers
             return multas;
         }
 
+        // GET: api/Multas/PlacaID and not resolved
+        [HttpGet("PlacaID/{placaID}")]
+        public async Task<ActionResult<IEnumerable<Multas>>> GetMultasByPlacaID(string placaID)
+        {
+            var multas = await _context.Multas
+                .Where(m => m.multaPlacas.Any(mp => mp.PlacasId == placaID) && m.resuelta == false)
+                .Include(m => m.multaPlacas)
+                .Include(m => m.infraccionMultas)
+                .ToListAsync();
+            return multas;
+        }
+
         // PUT: api/Multas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
