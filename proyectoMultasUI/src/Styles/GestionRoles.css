@@ -1,0 +1,132 @@
+/* Paleta de colores */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo general */
+.roles-background {
+    background: linear-gradient(135deg, var(--payne-gray) 35%, var(--caledon) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Contenedor principal */
+.roles-container {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    text-align: center;
+}
+
+/* Título */
+.roles-container h2 {
+    color: var(--payne-gray);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Mensaje de error y éxito */
+.error-message {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.success-message {
+    color: #5cb85c;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Formulario de agregar rol */
+.form-role {
+    display: flex;
+    align-items: center; /* Centrado vertical */
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-role input {
+    flex: 1; /* Hace que el input ocupe el espacio disponible */
+    padding: 10px;
+    border: 1px solid var(--cadet-gray);
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.add-button {
+    background-color: var(--caledon);
+    color: var(--white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: var(--cadet-gray);
+}
+
+/* Tabla de roles */
+.roles-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.roles-table th, .roles-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--cadet-gray);
+    color: var(--payne-gray);
+}
+
+.roles-table th {
+    background-color: var(--timberwolf);
+    font-weight: bold;
+}
+
+/*
+.roles-table tr:nth-child(even) {
+    background-color: var(--lavender-blush);
+}
+*/
+
+/* Botón de eliminar en la tabla */
+.delete-button {
+    background-color: var(--lavender-blush);
+    color: var(--payne-gray);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: var(--caledon);
+    color: var(--white);
+}

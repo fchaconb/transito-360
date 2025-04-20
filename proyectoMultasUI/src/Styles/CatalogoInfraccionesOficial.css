@@ -1,0 +1,92 @@
+/* Paleta de Colores */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavander-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo y centrado de la página */
+.catalogo-infracciones-oficial-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--cadet-gray) 25%, var(--caledon) 75%);
+}
+
+/* Contenedor Principal */
+.catalogo-infracciones-oficial-container {
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Encabezado */
+.catalogo-infracciones-oficial-container h2 {
+    font-size: 1.5em;
+    color: var(--payne-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.catalogo-infracciones-oficial-container h2 svg {
+    margin-right: 8px;
+    color: var(--caledon);
+}
+
+/* Mensaje de Error */
+.error-message {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Tabla de Infracciones */
+.infracciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    color: var(--payne-gray);
+}
+
+.infracciones-table th, .infracciones-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--cadet-gray);
+}
+
+/* Encabezados de Tabla */
+.infracciones-table th {
+    background-color: var(--timberwolf);
+    color: var(--payne-gray);
+    font-weight: bold;
+}
+
+/*
+.infracciones-table tr:nth-child(even) {
+    background-color: var(--lavander-blush);
+}
+
+.infracciones-table tr:hover {
+    background-color: var(--caledon);
+    cursor: default;
+}
+
+*/
+
+/* Mensaje de No Datos */
+.no-data {
+    text-align: center;
+    color: var(--cadet-gray);
+    font-style: italic;
+    padding: 20px;
+}

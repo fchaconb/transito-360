@@ -1,0 +1,241 @@
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+    --error-red: #d9534f;
+}
+
+/* Fondo y diseño general */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--payne-gray) 30%, var(--cadet-gray) 100%);
+    color: var(--payne-gray);
+}
+
+/* Menú lateral */
+.sidebar {
+    width: 250px;
+    background-color: var(--white);
+    color: var(--payne-gray);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar h2 {
+    font-size: 25px;
+    margin-bottom: 20px;
+    color: var(--caledon);
+}
+
+.sidebar-button {
+    background: transparent;
+    color: var(--payne-gray);
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: background 0.3s;
+}
+
+.sidebar-button i {
+    color: var(--caledon);
+}
+
+.sidebar-button:hover {
+    background-color: var(--timberwolf);
+}
+
+/* Contenido principal */
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.content-header h2 {
+    color: var(--caledon);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.content-body {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-body p {
+    color: var(--payne-gray);
+    font-size: 18px;
+}
+
+/* Contenedor de Informe de Multas */
+.reporte-container {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 30px auto;
+    border: 2px solid black; /* Borde negro */
+}
+
+.reporte-container h3 {
+    color: var(--payne-gray);
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+/* Contenedor del gráfico */
+.chart-container {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+}
+
+/* Botón de exportación */
+.btn-export {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--caledon);
+    color: var(--white);
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    margin-right: 10px; /* Espaciado entre botones */
+}
+
+.btn-export:hover {
+    background-color: var(--payne-gray);
+}
+
+/* Contenedor del filtro */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap; /* Permite que se apilen los filtros en pantallas pequeñas */
+}
+
+.filter-container label {
+    font-size: 16px;
+    color: var(--payne-gray);
+}
+
+/* Inputs de fecha */
+.filter-container input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid var(--cadet-gray);
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+/* Efecto de enfoque en los inputs */
+.filter-container input:focus {
+    outline: none;
+    border-color: var(--caledon);
+}
+
+/* Botón de filtrar */
+.btn-filter {
+    padding: 10px 20px;
+    background-color: var(--caledon);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-left: 15px;
+    margin-top: 20px;
+}
+
+.btn-filter:hover {
+    background-color: var(--payne-gray);
+}
+
+/* Botón de cerrar sesión */
+.dashboard-logout-button {
+    background-color: var(--caledon);
+    color: var(--white);
+    padding: 10px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: auto;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.dashboard-logout-button:hover {
+    background-color: var(--payne-gray);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .sidebar-button {
+        font-size: 18px;
+        justify-content: center;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .content-header h2 {
+        font-size: 22px;
+    }
+
+    .reporte-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .filter-container {
+        flex-direction: column; /* Apila los filtros en pantallas pequeñas */
+        align-items: center;
+    }
+
+    .filter-container label,
+    .filter-container input,
+    .btn-filter {
+        width: 100%; /* Asegura que los elementos ocupen el ancho completo */
+        max-width: 300px; /* Limita el ancho máximo */
+        text-align: center;
+    }
+
+    .btn-export {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

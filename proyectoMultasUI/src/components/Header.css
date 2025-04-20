@@ -1,0 +1,156 @@
+/* Header.css */
+
+/* Colores de la paleta */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Contenedor principal del header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--payne-gray);
+    color: var(--white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 60px; /* Asigna una altura fija si es necesario */
+}
+
+/* Estilos para el logo y el nombre de la marca */
+.header-logo {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header-logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+/* Botones del header a la izquierda */
+.header-left-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.header-left-buttons a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.header-left-buttons a:hover {
+    background-color: var(--cadet-gray);
+}
+
+/* Botones de login y registro a la derecha */
+.header-right-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.header-right-buttons a {
+    color: var(--white);
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.header-right-buttons a:hover {
+    background-color: var(--caledon);
+}
+
+
+/* register.css */
+
+/* Contenedor general para el fondo */
+.login-background {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Ajusta el formulario hacia la parte superior */
+    min-height: calc(100vh - 60px);  /* Resta la altura del header */
+    padding-top: 24px; /* Ajuste adicional si es necesario */
+}
+
+/* Estilo general para los formularios */
+.auth-container {
+    max-width: 400px;
+    margin-top: 20px; /* Ajusta para evitar que quede pegado al borde */
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.auth-container h2 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Estilo de los inputs */
+.auth-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.auth-container input:focus {
+    border-color: #0056b3;
+}
+
+/* Estilo para los botones */
+.auth-container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #0056b3;
+    color: #ffffff;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-container button:hover {
+    background-color: #004494;
+}
+
+.auth-container p {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Estilo para los enlaces dentro de la autenticación */
+.auth-container a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}

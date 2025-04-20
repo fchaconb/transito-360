@@ -1,0 +1,173 @@
+/* Paleta de Colores */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavander-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo y estilo general */
+.resolver-disputas-background {
+    background: var(--lavander-blush);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Fondo degradado */
+.shape-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--payne-gray) 25%, var(--caledon) 75%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 0;
+}
+
+/* Contenedor principal */
+.resolver-disputas-container {
+    background-color: var(--white);
+    width: 850px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Encabezado */
+.resolver-disputas-container h2 {
+    color: var(--payne-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resolver-disputas-container h2 svg {
+    margin-right: 8px;
+    color: var(--caledon);
+}
+
+/* Mensaje de error */
+.error-message {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Tabla */
+.disputas-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--payne-gray);
+}
+
+.disputas-table th, .disputas-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--cadet-gray);
+}
+
+.disputas-table th {
+    background-color: var(--timberwolf);
+    color: var(--payne-gray);
+    font-weight: bold;
+}
+
+.disputas-table th svg {
+    margin-right: 8px;
+}
+
+/* Filas */
+.disputas-table tr:nth-child(even) {
+    background-color: var(--lavander-blush);
+}
+
+.disputas-table tr:hover {
+    background-color: var(--caledon);
+    cursor: default;
+}
+
+.resolve-button, .reject-button {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.resolve-button {
+    background: var(--caledon);
+    color: var(--white);
+}
+
+.reject-button {
+    background: #d9534f;
+    color: var(--white);
+}
+
+.update-status-container {
+    margin-top: 20px;
+    background-color: var(--timberwolf);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.btn-submit {
+    background: var(--caledon);
+    border: none;
+    color: var(--white);
+    padding: 8px 12px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* SweetAlert2 Styles */
+.swal2-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--cadet-gray);
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#resolution-dropdown {
+    max-width: 80%;
+}
+
+/* Botones de SweetAlert2 */
+.swal2-confirm-button {
+    background: var(--cadet-gray);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.resolver-button {
+    background: var(--payne-gray);
+    color: var(--white);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+    align-items: center;
+}

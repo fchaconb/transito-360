@@ -1,0 +1,161 @@
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+
+
+.pago-page {
+    background: linear-gradient(135deg, var(--cadet-gray) 25%, var(--timberwolf) 75%);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+}
+
+.pago-container {
+    display: flex;                   /* Activa Flexbox */
+    flex-direction: column;          /* Coloca el contenido en columna */
+    justify-content: center;         /* Centra verticalmente el contenido */
+    align-items: center;             /* Centra horizontalmente el contenido */
+    max-width: 800px;/* Aumenta el ancho */
+    min-height: 300px; /* Aumenta la altura mínima */
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 100px;
+    margin-bottom: 50px;
+   /* flex-grow: 1;*/
+    /*top: 100px;*/
+}
+
+.pago-container h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+body {
+    margin-top: 0px;
+}
+
+.metodo-pago {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.metodo-pago label {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+}
+
+.metodo-pago input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+/* Ajuste de tamaño de comprobante de SINPE */
+.comprobante-upload {
+    margin-top: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comprobante-upload label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+}
+
+.comprobante-upload input[type="file"] {
+    width: 100%;
+    padding: 10px;  /* Ajustamos el padding para que se vea más proporcionado */
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+/* Botón de Enviar */
+.enviar-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #546A76;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.enviar-button:hover {
+    background-color: #88A0A8;
+}
+
+.paypal-button {
+    width: 500px;
+}
+
+/* Estilo para el botón de PayPal */
+.paypal-btn {
+    background-color: #546A76;
+    border: none;
+    cursor: pointer;
+    padding: 12px 20px;  /* Tamanño del botón */
+    display: inline-flex;
+    align-items: center;
+    color: white;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.paypal-btn:hover {
+    background-color: #88A0A8;
+}
+
+.paypal-btn img {
+    width: 150px;
+    margin-right: 10px;
+}
+
+.error-message,
+.success-message {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}

@@ -1,0 +1,140 @@
+/* Paleta de Colores */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavander-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo y estilo general */
+.ver-declaraciones-background {
+    background: var(--lavander-blush);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Fondo degradado */
+.shape-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--payne-gray) 25%, var(--caledon) 75%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 0;
+}
+
+/* Contenedor principal */
+.ver-declaraciones-container {
+    background-color: var(--white);
+    width: 1300px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Encabezado */
+.ver-declaraciones-container h2 {
+    color: var(--payne-gray);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+}
+
+.ver-declaraciones-container h2 svg {
+    margin-right: 8px;
+    color: var(--caledon);
+}
+
+/* Mensajes de error y éxito */
+.error-message {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.success-message {
+    color: #5cb85c;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Tabla de declaraciones */
+.ver-declaraciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    color: var(--payne-gray);
+}
+
+.ver-declaraciones-table th, .ver-declaraciones-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--cadet-gray);
+}
+
+.ver-declaraciones-table th {
+    background-color: var(--timberwolf);
+    color: var(--payne-gray);
+    font-weight: bold;
+}
+/*cambiar el color fijo del fondo de la fila
+.ver-declaraciones-table tr:nth-child(even) {
+    background-color: var(--white);
+}
+
+.ver-declaraciones-table tr:hover {
+    background-color:  var(--caledon);
+    cursor: default;
+}
+
+*/
+
+/* Contenedor del área de declaración con borde degradado */
+.declaracion-container {
+    background: linear-gradient(135deg, var(--payne-gray) 25%, var(--caledon) 75%);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 10px;
+    transition: none; 
+}
+
+/* Área de declaración (textarea) con fondo blanco */
+textarea {
+    width: 100%;
+    background-color: var(--white);
+    color: var(--payne-gray);
+    border: 2px solid var(--cadet-gray);
+    border-radius: 5px;
+    padding: 10px;
+    resize: vertical;
+    font-size: 14px;
+    box-sizing: border-box;  /* Asegura que el padding no afecte el tamaño total */
+}
+
+/* Botón de envío */
+.send-button {
+    background: var(--payne-gray);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+    background-color: var(--payne-gray);
+}
