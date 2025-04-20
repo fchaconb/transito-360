@@ -1,0 +1,331 @@
+:root {
+    --primary-color: #546A76;
+    --secondary-color: #B4CEB3;
+    --sidebar-bg: #FDEDEE;
+    --button-hover: #DBD3C9;
+    --input-border: #88A0A8;
+    --white: #FFFFFF;
+    --error-color: #d9534f;
+}
+
+/* Layout General */
+.dashboard-layout-perfil {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--payne-gray) 30%, var(--cadet-gray) 100%);
+}
+
+/* Barra Lateral */
+.sidebar-perfil {
+    background-color: var(--sidebar-bg);
+    padding: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.sidebar-perfil h2 {
+    color: var(--primary-color);
+    margin-top: 60px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Información de perfil en la barra lateral */
+.perfil-sidebar {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.foto-perfil-lateral {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid var(--primary-color);
+}
+
+.perfil-sidebar p {
+    margin: 8px 0;
+    color: var(--primary-color);
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Iconos en la barra lateral */
+.perfil-sidebar p svg {
+    color: var(--secondary-color);
+    font-size: 1.1em;
+}
+
+.logout-button {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: var(--primary-color);
+}
+
+/* Contenido Principal */
+.main-content-perfil {
+    margin-top: 60px;
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-header-perfil h2 {
+    color: var(--white);
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.content-body-perfil {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Foto de perfil con opción de actualización */
+.foto-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.foto-perfil img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
+    border: 2px solid var(--primary-color);
+}
+
+.btn-upload-perfil {
+    background-color: var(--input-border);
+    color: var(--white);
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+.btn-upload-perfil:hover {
+    background-color: var(--primary-color);
+}
+
+/* Formulario de perfil */
+.perfil-form .form-group-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.perfil-form label {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.perfil-form .form-control-perfil {
+    width: 80%;
+    padding: 10px;
+    font-size: 1em;
+    color: var(--primary-color);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.placas-textarea {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.perfil-form .form-control-perfil:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0px 0px 5px rgba(180, 206, 179, 0.5);
+}
+
+/* Botón Guardar Cambios */
+.btn-primary-perfil {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 40%;
+}
+
+.btn-primary-perfil:hover {
+    background-color: var(--input-border);
+}
+
+/* Botón Cambiar Contraseña */
+.cambiar-password {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+    text-align: center;
+    gap: 10px;
+}
+
+.btn-secondary-perfil {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 40%;
+}
+
+.btn-secondary-perfil:hover {
+    background-color: var(--input-border);
+}
+
+/* Mensaje de estado */
+.text-info-perfil {
+    color: var(--primary-color);
+    font-size: 0.9em;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Ajustes de responsividad */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+        padding: 15px;
+    }
+    .content-header h2 {
+        font-size: 1.5em;
+    }
+}
+
+#new-placa-input {
+    width: 70%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.swal2-table-placa {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.swal2-table-placa th, .swal2-table-placa td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid var(--cadet-gray);
+}
+
+.swal2-table-placa th {
+    background-color: var(--input-border);
+    color: var(--white);
+    font-weight: bold;
+}
+
+#add-placa-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 30%;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.remove-placa-button {
+    background-color: var(--error-color);
+    color: var(--white);
+    padding: 10px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 40%;
+    text-align: center;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.swal2-guardar-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.swal2-content-placa {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.secondary-container{
+    margin-top: 20px;
+}
+
+.button-save {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.perfil-form-bottom {
+    margin-bottom: 15px;
+}

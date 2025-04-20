@@ -1,0 +1,124 @@
+/* Importa variables de color */
+:root {
+    --: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavander-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--payne-gray);
+    color: var(--white);
+    position: fixed;
+    top: 0;
+    width: 99%;
+    z-index: 1000;
+}
+
+/* Estilo de botones en el header */
+.header-left .nav-button, .header-right button {
+    background-color: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: color 0.3s ease;
+}
+
+ .header-right button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #88A0A8;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.header-left .nav-button:hover, .header-right button:hover {
+    color: var(--caledon);
+}
+
+/* Estilos de la sección de valores */
+.values {
+    padding: 10px; /* Se reduce el padding para hacer la sección más pequeña */
+    background-color: var(--timberwolf);
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 70%; /* fijarse que la sección no sea muy amplia */
+    font-size: 0.9rem; /* Cambiar el tamaño de la fuente para que se vea más pequeño */
+    margin-top: 50px; /* Espacio superior para la sección de valores */
+    text-align: center; 
+    color: var(--payne-gray);
+}
+
+.values ul {
+    list-style-type: none; /* Quita los puntos de la lista */
+    padding: 0; /* Elimina el padding del ul */
+    margin: 0; /* Elimina el margen del ul */
+}
+
+/* título de valores */
+.values-title {
+    color: var(--payne-gray); /* Cambia este color por el que prefieras */
+    text-align: center; 
+    margin-bottom: 10px; /* Espacio inferior */
+}
+
+
+/* Estilo de la sección del equipo */
+.team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Estilo para cada tarjeta de miembro del equipo */
+.card {
+    margin: 10px;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Imagen del perfil */
+.profile-photo {
+    width: 200px; /* Ajusta el tamaño  */
+    height: 200px;
+    border-radius: 50%;
+}
+
+/* Estilos del footer */
+footer {
+    background-color: var(--payne-gray);
+    color: var(--white);
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Estilos para centrar títulos */
+.transito-title, .slogan, .values h2 {
+    text-align: center; /* Centrar el texto */
+}
+
+/* Espaciado adicional para los títulos */
+.transito-title {
+    margin-top: 100px; /* Espacio superior */
+}
+
+.slogan {
+    margin: 20px 0; /* Espacio vertical alrededor del eslogan */
+}
+

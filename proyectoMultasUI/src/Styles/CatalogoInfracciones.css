@@ -1,0 +1,161 @@
+/* Paleta de Colores */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo general */
+.catalogo-background {
+    background: linear-gradient(135deg, var(--payne-gray) 35%, var(--caledon) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Contenedor principal */
+.catalogo-infracciones-container {
+    background-color: var(--white);
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    margin: auto;
+}
+
+/* Título */
+.catalogo-infracciones-container h2 {
+    color: var(--payne-gray);
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Mensajes de éxito y error */
+.success-message {
+    color: var(--caledon);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Formulario para agregar infracciones */
+.add-infraccion-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.add-infraccion-form input[type="text"],
+.add-infraccion-form input[type="number"] {
+    padding: 10px;
+    border: 1px solid var(--cadet-gray);
+    border-radius: 6px;
+    font-size: 16px;
+    width: 200px;
+}
+
+.add-button {
+    background-color: var(--caledon);
+    color: var(--white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: var(--cadet-gray);
+}
+
+/* Tabla de infracciones */
+.infracciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.infracciones-table th,
+.infracciones-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--cadet-gray);
+    color: var(--payne-gray);
+    text-align: left;
+    font-size: 16px;
+}
+
+.infracciones-table th {
+    background-color: var(--timberwolf);
+    font-weight: bold;
+}
+
+/*
+.infracciones-table tr:nth-child(even) {
+    background-color: var(--lavender-blush);
+}
+
+.infracciones-table tr:hover {
+    background-color: var(--caledon);
+    color: var(--white);
+    cursor: default;
+}
+
+*/
+
+/* Botones de acciones */
+.action-button {
+    background-color: var(--lavender-blush);
+    color: var(--payne-gray);
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px 5px;
+}
+
+.edit-button:hover {
+    background-color: var(--cadet-gray);
+    color: var(--white);
+}
+
+.save-button {
+    background-color: var(--caledon);
+    color: var(--white);
+}
+
+.save-button:hover {
+    background-color: #88A0A8;
+}
+
+/* Input de edición */
+.edit-input {
+    padding: 8px;
+    border: 1px solid var(--cadet-gray);
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100px;
+}

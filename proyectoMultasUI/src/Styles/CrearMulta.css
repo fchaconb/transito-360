@@ -1,0 +1,162 @@
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavander-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo y estilo general */
+.crear-multa-background {
+    background: var(--lavander-blush);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Fondo degradado */
+.shape-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--payne-gray) 25%, var(--caledon) 75%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 0;
+}
+
+/* Contenedor principal del formulario */
+.crear-multa-container {
+    background-color: var(--white);
+    width: 400px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+/* Encabezado */
+.crear-multa-container h2 {
+    color: var(--payne-gray);
+    margin-bottom: 15px;
+}
+
+/* Formulario */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-group .icon {
+    margin-right: 10px;
+    color: var(--payne-gray);
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid var(--cadet-gray);
+    border-radius: 5px;
+    outline: none;
+    font-size: 18px;
+}
+
+.btn-submit {
+    background-color: var(--caledon);
+    border: none;
+    color: var(--white);
+    width: 100%;
+    padding: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #98b798;
+}
+
+.message {
+    margin-top: 15px;
+    color: var(--payne-gray);
+}
+
+/* Botón de búsqueda */
+.search-button {
+    padding: 8px 15px;
+    background-color: var(--caledon);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: var(--payne-gray);
+}
+
+/* Lista de sugerencias */
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    border: 1px solid var(--cadet-gray);
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0 0;
+    z-index: 10;
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestions-list li:hover {
+    background-color: var(--lavender-blush);
+}
+
+/* Mapa de selección de ubicación */
+.leaflet-container {
+    height: 250px;
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--cadet-gray);
+    margin-bottom: 15px;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+    margin-left: 25px;
+}
+  
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+.form-container{
+    border: 1px solid #546A76;
+    padding: 10px;
+}

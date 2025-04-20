@@ -1,0 +1,126 @@
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo y estilo general para centrar el contenedor */
+.ver-multas-page {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    justify-content:center;
+    align-items:center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--cadet-gray) 25%, var(--caledon) 75%);
+    margin-top: 20px;
+}
+
+/* Contenedor Principal */
+.ver-multas-container {
+    padding: 20px;
+    max-width: 1500px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Encabezado */
+.ver-multas-container h2 {
+    font-size: 1.5em;
+    color: var(--payne-gray);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ver-multas-container h2 svg {
+    margin-right: 8px;
+    color: var(--caledon);
+}
+
+/* Mensaje de Error */
+.error-message {
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Tabla de Multas */
+.multas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    color: var(--payne-gray);
+}
+
+.multas-table th, .multas-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--cadet-gray);
+}
+
+/* Encabezados de Tabla */
+.multas-table th {
+    background-color: var(--timberwolf);
+    color: var(--payne-gray);
+    font-weight: bold;
+}
+
+.multas-table th svg {
+    margin-right: 8px;
+}
+
+/* Filas 
+.multas-table tr:nth-child(even) {
+    background-color: var(--lavender-blush);
+}
+
+.multas-table tr:hover {
+    background-color: var(--caledon);
+    cursor: default;
+}
+
+*/
+
+/* Botones de Acción */
+.action-buttons .pay-button,
+.action-buttons .dispute-button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.pay-button {
+    background-color: var(--payne-gray);
+}
+
+.pay-button:hover {
+    background-color: var(--cadet-gray);
+}
+
+.dispute-button {
+    background-color: #f76c5e;
+}
+
+.dispute-button:hover {
+    background-color: #d9534f;
+}
+
+/* Mensaje cuando no hay datos */
+.no-data {
+    text-align: center;
+    padding: 15px 0;
+    font-style: italic;
+    color: var(--cadet-gray);
+}

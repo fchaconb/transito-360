@@ -1,0 +1,50 @@
+/* Definir los colores de la paleta */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Estilo general del header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--payne-gray); /* Color de fondo del header */
+    color: var(--white); /* Color del texto del header */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para el header */
+}
+
+/* Estilos para los botones de navegación en el header */
+.header-left .nav-button, .header-right button {
+    background-color: transparent; /* Fondo transparente */
+    border: none;
+    color: var(--white); /* Color del texto */
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transición suave */
+}
+
+/* Botones de la sección derecha */
+.header-right button {
+    background-color: var(--cadet-gray); /* Fondo específico para botones de la derecha */
+    color: var(--white);
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-right: 30px; /* Espaciado entre botones */
+}
+
+/* Efecto hover para todos los botones */
+.header-left .nav-button:hover, .header-right button:hover {
+    color: var(--caledon); /* Color de texto en hover */
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil en hover */
+}

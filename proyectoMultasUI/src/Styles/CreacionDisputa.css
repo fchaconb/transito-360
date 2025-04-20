@@ -1,0 +1,104 @@
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavander-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+/* Fondo y centrado de la página */
+.crear-disputa-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--cadet-gray) 25%, var(--caledon) 75%);
+}
+
+/* Contenedor Principal */
+.crear-disputa-container {
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Encabezado */
+.crear-disputa-container h2 {
+    font-size: 1.5em;
+    color: var(--payne-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.crear-disputa-container h2 svg {
+    margin-right: 8px;
+    color: var(--caledon);
+}
+
+/* Formulario */
+.form-group-disputa {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group-disputa label {
+    color: var(--payne-gray);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.form-group-disputa .icon {
+    margin-right: 8px;
+    color: var(--caledon);
+}
+
+/* Inputs y Textarea */
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--cadet-gray);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Botón de Enviar */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--caledon);
+    border: none;
+    color: var(--white);
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-submit:hover {
+    background-color: #9bb39d;
+}
+
+/* Mensaje */
+.message {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: var(--payne-gray);
+}

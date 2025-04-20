@@ -1,0 +1,96 @@
+/* Estilo general para los formularios */
+.auth-container {
+    max-width: 400px;
+    margin: 0px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Ajusta según la altura de tu header */
+.login-background {
+    padding-top: 100px;  
+}
+
+
+.auth-container h2 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Estilo de los inputs */
+.auth-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.auth-container input:focus {
+    border-color: #0056b3;
+}
+
+/* Estilo para los botones */
+.auth-container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #0056b3;
+    color: #ffffff;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-container button:hover {
+    background-color: #004494;
+}
+
+.auth-container p {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Estilo para los enlaces dentro de la autenticación */
+.auth-container a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos de las alertas */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.alert-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.alert-error {
+    background-color: #dc3545;
+    color: white;
+}
+
+

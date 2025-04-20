@@ -1,0 +1,229 @@
+/* Paleta de Colores */
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavander-blush: #FDEDEE;
+    --white:#FFFFFF
+}
+
+/* Fondo degradado */
+body {
+    background: linear-gradient(135deg, rgba(136, 160, 168, 0.8) 25%, rgba(219, 211, 201, 0.8) 75%);
+  
+}
+
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #546A76;
+    color: #FFFFFF;
+    position: fixed; /* Fija el header en la parte superior */
+    top: 0;
+    width: 99%; /* Asegura que ocupe el ancho completo de la pantalla */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Botones en el header */
+.header-left .nav-button {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: color 0.3s ease;
+}
+
+.header-left .nav-button:hover {
+    color: #FFFFFF;
+}
+
+.header-right button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #88A0A8;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Fondo de Título Principal */
+.main-banner {
+    background-color: #274C77;
+    color: #FFFFFF;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.main-banner h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+/* imagen  Tránsito 360 */
+.transito-container {
+    width: 100%; /* ancho  */
+    height: 300px; /*  altura  */
+    background-image: url(imagen/calleLandingPage.jpg); /* ruta de la imagen */
+    background-size: cover; /* Hace que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px; /* Bordes redondeados */
+}
+
+/* Título dentro del contenedor */
+.transito-title {
+    color: #FFFFFF; /*  color del texto  */
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra*/
+    -webkit-text-stroke: 1px #000000; /* Contorno */
+}
+
+
+.mapa-calor-title {
+    text-align: center;
+    color: #FFFFFF;
+    
+}
+
+
+/*letra consulta por placa*/
+.consulta-placa-title {
+    text-align: center;
+    color: #FFFFFF;
+
+}
+
+
+.consulta-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+}
+
+/*cuadro de ingrese numero de placa*/
+.consulta-form input {
+    padding: 10px;
+    border: 1px solid #274C77;
+    border-radius: 5px;
+    width: 220px !important;
+    font-size: 1rem;
+
+}
+/*buscar en consulta de placa*/
+.consulta-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #88A0A8;
+    color: #FFFFFF;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Tabla de resultados */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.results-table th, .results-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.results-table th {
+    background-color: #B4CEB3;
+    color: #FFFFFF;
+}
+
+.results-table td {
+    background-color: #FFFFFF;
+    color: #555;
+}
+
+.results-table tr:hover {
+    background-color: #B5EAEA;
+}
+
+/* Contenedor para centrar y alinear los elementos */
+.section-container {
+    width: 70%; /* Igual ancho que el mapa */
+    margin: 20px auto; /* Centra y agrega espacio vertical */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.consulta-form,
+.results-table {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+}
+
+
+
+/* Contenedor principal del mapa */
+.heatmap-section {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+    width: 100%;
+}
+/* Estilos de mapa */
+.map-container {
+    margin-top: 20px auto;
+    height: 400px;
+    width: 70%;
+    max-width: 1000px; /* Establece el ancho maximo*/
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #B4CEB3;
+}
+
+footer {
+    background-color: #546A76;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    position: relative;
+    color: #FFFFFF;
+    margin-top: 100px;
+}
+
+.footer-title {
+    font-size: 1.0rem;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+    /*background-color: #546A76;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0px;
+    margin-top: 100px;
+    left: 0;*/
+
+
+
+

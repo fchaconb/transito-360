@@ -1,0 +1,123 @@
+:root {
+    --payne-gray: #546A76;
+    --cadet-gray: #88A0A8;
+    --caledon: #B4CEB3;
+    --timberwolf: #DBD3C9;
+    --lavender-blush: #FDEDEE;
+    --white: #FFFFFF;
+}
+
+.crear-usuario-background {
+    background: linear-gradient(135deg, var(--payne-gray) 35%, var(--caledon) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    margin-top: 35px;
+}
+
+.crear-usuario-container {
+    display: flex;
+    gap: 60px;
+    background-color: var(--white);
+    width: 90%;
+    max-width: 1200px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+/* Formularios y tablas */
+.formulario-container,
+.tabla-usuarios-container {
+    flex: 1;
+}
+
+/* Títulos */
+.crear-usuario-container h2 {
+    color: var(--payne-gray);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Campo de entrada con icono */
+.input-icon {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-icon .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--payne-gray);
+}
+
+.input-icon input,
+.input-icon select {
+    padding-left: 40px;
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--cadet-gray);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Botones */
+.btn-submit {
+    background-color: var(--caledon);
+    border: none;
+    color: var(--white);
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button {
+    background-color: var(--lavender-blush);
+    color: var(--payne-gray);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: var(--caledon);
+    color: var(--white);
+}
+
+/* Tabla de usuarios */
+.usuarios-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.usuarios-table th,
+.usuarios-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--cadet-gray);
+    text-align: left;
+}
+
+.usuarios-table th {
+    background-color: var(--timberwolf);
+}
+
+/*
+.usuarios-table tr:nth-child(even) {
+    background-color: var(--lavender-blush);
+}
+*/
